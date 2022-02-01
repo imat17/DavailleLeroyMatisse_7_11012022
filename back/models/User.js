@@ -17,6 +17,11 @@ const User = bdd.define('User', {
 	password: {
 		type: DataTypes.STRING,
 		allowNull: false,
+		// Hash du mot de passe
+		set(value) {
+			const hash = bcrypt.hashSync(value, 10);
+			this.setDataValue('password', hash);
+		}
 	},
 	isAdmin: {
 		type: DataTypes.BOOLEAN,
@@ -25,11 +30,5 @@ const User = bdd.define('User', {
 	},
 });
 
-// cryptage du mot de passe avant de save dans la bdd
-User.pre('save', async function (next) {
-	const salt = await bcrypt.genSalt();
-	this.password = await bcrypt.hash(this.password, salt);
-	next();
-});
 
 module.exports = User;
