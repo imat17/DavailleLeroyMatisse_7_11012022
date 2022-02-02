@@ -2,7 +2,8 @@ const express = require('express');
 const app = express();
 const cookieParser = require('cookie-parser');
 const userRoutes = require('./routes/user.routes');
-const path = require('path');
+const postRoutes = require('./routes/post.routes');
+// const path = require('path');
 const { connect } = require('./config/connect');
 const { loadModel } = require('./models/Index');
 const { checkUser, requireAuth } = require('./middlewares/auth.middleware');
@@ -38,5 +39,6 @@ app.get('/jwtid', requireAuth, (req, res) => {
 
 // Routes
 app.use('/api/user', userRoutes);
+app.use('/api/post', postRoutes);
 
 module.exports = app;
