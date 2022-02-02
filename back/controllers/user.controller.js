@@ -1,22 +1,40 @@
-const { SELECT } = require('sequelize/dist/lib/query-types');
 const UserModel = require('../models/User');
 
 module.exports.getAllUsers = async (req, res) => {
-	try {
-	} catch {}
+	const users = await UserModel.findAll({
+		attributes: { exclude: ['password', 'isAdmin'] },
+	});
+	res.status(200).json(users);
 };
 
 module.exports.getOneUser = async (req, res) => {
-	try {
-	} catch {}
+	const user = await UserModel.findOne({
+		where: { id: req.params.id },
+		attributes: { exclude: ['password', 'isAdmin'] },
+	});
+	res.status(200).json(user);
 };
 
 module.exports.updateUser = async (req, res) => {
+	// Gestion err,docs à revoir
 	try {
-	} catch {}
+		const updatedUser = await UserModel.update(
+			{ pseudo: req.body.pseudo, email: req.body.email },
+			{ where: { id: req.params.id } }
+		);
+		res.status(200).json(updatedUser);
+	} catch (err) {
+		res.status(500).send('Erreur');
+	}
 };
 
 module.exports.deleteUser = async (req, res) => {
 	try {
-	} catch {}
+		await UserModel.destroy({
+			where: { id: req.params.id },
+		});
+		res.status(200).json({ message: `L'utilisateur à bien été supprimé` });
+	} catch (err) {
+		return res.status(500).json({ message: err });
+	}
 };
