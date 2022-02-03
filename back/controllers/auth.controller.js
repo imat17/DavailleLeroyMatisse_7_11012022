@@ -1,6 +1,7 @@
 const UserModel = require('../models/User');
 const jwt = require('jsonwebtoken');
 const { signUpErrors, signInErrors } = require('../utils/errors.utils');
+const bcrypt = require('bcrypt');
 
 //Json Web Token
 const maxAge = 3 * 24 * 60 * 60 * 1000;
@@ -11,9 +12,10 @@ const createToken = (id) => {
 };
 
 module.exports.signUp = async (req, res) => {
-	const { pseudo, email, password } = req.body;
 	try {
-		const user = await UserModel.create({ pseudo, email, password });
+		const { pseudo, email, password } = req.body;
+		const hash = await bcrypt.hash(password, 10);
+		const user = await UserModel.create({ pseudo, email, password: hash });
 		res.status(201).json({ user: user.id });
 	} catch (err) {
 		const errors = signUpErrors(err);
@@ -22,12 +24,19 @@ module.exports.signUp = async (req, res) => {
 };
 
 module.exports.signIn = async (req, res) => {
-	const { email, password } = req.body;
 	try {
-		const user = await UserModel.findOne({ where: { email: email, password: password } });
-		const token = createToken(user.id);
-		res.cookie('jwt', token, { httpOnly: true, maxAge });
-		res.status(200).json({ user: user.id });
+		const { email, password } = req.body;
+		const user = await UserModel.findOne({ where: { email: email } });
+		if (user) {
+			const validPassword = await bcrypt.compare(password, user.password);
+			if (validPassword) {
+				const token = createToken(user.id);
+				res.cookie('jwt', token, { httpOnly: true, maxAge });
+				res.status(200).json({ user: user.id });
+			} else {
+				res.json('Mot de passe incorrect')
+			}
+		}
 	} catch (err) {
 		const errors = signInErrors(err);
 		res.status(400).send(err);

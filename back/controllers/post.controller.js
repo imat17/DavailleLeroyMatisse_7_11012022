@@ -3,11 +3,16 @@ const fs = require('fs');
 const { promisify } = require('util');
 const pipeline = promisify(require('stream').pipeline);
 
-module.exports.readPost = (req, res) => {
-	PostModel.findAll({ include: UserModel });
+module.exports.readPost = async (req, res) => {
+	try {
+		const allPosts = await PostModel.findAll();
+		res.status(200).send(allPosts);
+	} catch (err) {
+		res.status(500).send(err);
+	}
 };
 
-module.exports.createPost = (req, res) => {};
+module.exports.createPost = async (req, res) => {};
 
 module.exports.updatePost = (req, res) => {};
 

@@ -17,11 +17,10 @@ const User = bdd.define('User', {
 	password: {
 		type: DataTypes.STRING,
 		allowNull: false,
-		// Hash du mot de passe
-		set(value) {
-			const hash = bcrypt.hashSync(value, 10);
-			this.setDataValue('password', hash);
-		}
+	},
+	picture: {
+		type: DataTypes.STRING,
+		default: './uploads/profil/random-user.png',
 	},
 	isAdmin: {
 		type: DataTypes.BOOLEAN,
@@ -30,5 +29,10 @@ const User = bdd.define('User', {
 	},
 });
 
-
 module.exports = User;
+
+// Hash du mot de passe
+// set(value) {
+// 	const hash = bcrypt.hashSync(value, 10);
+// 	this.setDataValue('password', hash);
+// },
