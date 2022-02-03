@@ -1,7 +1,6 @@
 const { bdd } = require('../config/connect');
 const { DataTypes } = require('sequelize');
-// const { isEmail } = require('validator');
-const bcrypt = require('bcrypt');
+
 
 const User = bdd.define('User', {
 	pseudo: {
@@ -21,6 +20,7 @@ const User = bdd.define('User', {
 	picture: {
 		type: DataTypes.STRING,
 		default: './uploads/profil/random-user.png',
+		allowNull: false,
 	},
 	isAdmin: {
 		type: DataTypes.BOOLEAN,
@@ -30,9 +30,3 @@ const User = bdd.define('User', {
 });
 
 module.exports = User;
-
-// Hash du mot de passe
-// set(value) {
-// 	const hash = bcrypt.hashSync(value, 10);
-// 	this.setDataValue('password', hash);
-// },
