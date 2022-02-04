@@ -1,8 +1,6 @@
 const { UserModel, PostModel, CommentModel } = require('../models/Index');
 const fs = require('fs');
 const { promisify } = require('util');
-const { json } = require('body-parser');
-const { userInfo } = require('os');
 const pipeline = promisify(require('stream').pipeline);
 
 module.exports.readPost = async (req, res) => {
@@ -35,14 +33,14 @@ module.exports.createPost = async (req, res) => {
 		// Stockage des images des posts dans le dossier front 'post'
 		await pipeline(
 			req.file.stream,
-			fs.createWriteStream(`${__dirname}/../client/public/uploads/posts/${fileName}`)
+			fs.createWriteStream(`${__dirname}/../../front/groupomania/public/uploads/posts/${fileName}`)
 		);
 	}
 
 	const newPost = PostModel.create({
 		UserId: req.body.UserId,
 		text: req.body.text,
-		picture: req.file != null ? './uploads/posts' + fileName : '',
+		picture: req.file != null ? './uploads/posts/' + fileName : '',
 	});
 	try {
 		const post = await newPost.save();
@@ -81,7 +79,8 @@ module.exports.likePost = (req, res) => {};
 module.exports.unlikePost = (req, res) => {};
 
 // Comments
-module.exports.commentPost = async (req, res) => { // Problème postId
+module.exports.commentPost = async (req, res) => {
+	// Problème postId
 	try {
 		const newComment = await CommentModel.create({
 			text: req.body.text,
@@ -98,8 +97,8 @@ module.exports.commentPost = async (req, res) => { // Problème postId
 module.exports.editCommentPost = async (req, res) => {
 	try {
 		const updatedComment = await CommentModel.update(
-			{text: req.body.text},
-			{where: {id: req.params.id}}
+			{ text: req.body.text },
+			{ where: { id: req.params.id } }
 		);
 		res.status(201).send('Le commentaire à bien été modifié');
 	} catch {
@@ -114,6 +113,6 @@ module.exports.deleteCommentPost = async (req, res) => {
 		});
 		res.status(200).json({ message: 'Le commentaire à bien été supprimé' });
 	} catch (err) {
-		return res.status(500).json({ message: err + 'Erreur lors de la suppression du commentaire'});
+		return res.status(500).json({ message: err + 'Erreur lors de la suppression du commentaire' });
 	}
 };
