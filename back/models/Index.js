@@ -6,6 +6,7 @@ const { bdd } = require('../config/connect');
 const loadModel = async () => {
 	try {
 		await UserModel.hasMany(PostModel);
+		await UserModel.hasMany(CommentModel);
 		await PostModel.hasMany(CommentModel)
 		await bdd.sync();
 	} catch (error) {

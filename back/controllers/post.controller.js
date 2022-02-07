@@ -20,8 +20,8 @@ module.exports.createPost = async (req, res) => {
 			if (
 				req.file.detectedMimeType != 'image/jpg' &&
 				req.file.detectedMimeType != 'image/png' &&
-				req.file.detectedMimeType != 'image/gif' &&
-				req.file.detectedMimeType != 'image/jpeg'
+				req.file.detectedMimeType != 'image/jpeg' &&
+				req.file.detectedMimeType != 'image/gif'
 			)
 				throw Error('Image invalide');
 
@@ -29,7 +29,15 @@ module.exports.createPost = async (req, res) => {
 		} catch (err) {
 			return res.status(500).send(err);
 		}
-		fileName = req.body.UserId + Date.now() + '.jpg';
+		if (
+			req.file.detectedMimeType == 'image/jpg' ||
+			req.file.detectedMimeType == 'image/png' ||
+			req.file.detectedMimeType == 'image/jpeg'
+		) {
+			fileName = req.body.UserId + Date.now() + '.jpg';
+		} else if (req.file.detectedMimeType == 'image/gif') {
+			fileName = req.body.UserId + Date.now() + '.gif';
+		}
 		// Stockage des images des posts dans le dossier front 'post'
 		await pipeline(
 			req.file.stream,
@@ -52,8 +60,8 @@ module.exports.createPost = async (req, res) => {
 
 module.exports.updatePost = async (req, res) => {
 	try {
-		const updatedPost = await PostModel.update(
-			{ text: req.body.text, picture: req.file },
+		 await PostModel.update(
+			{ text: req.body.text },
 			{ where: { id: req.params.id } }
 		);
 		res.status(201).send('Le post à bien été modifié');
@@ -73,7 +81,7 @@ module.exports.deletePost = async (req, res) => {
 	}
 };
 
-// Likes / Dislikes
+// Likes / Unlikes
 module.exports.likePost = (req, res) => {};
 
 module.exports.unlikePost = (req, res) => {};
@@ -85,6 +93,7 @@ module.exports.commentPost = async (req, res) => {
 			text: req.body.text,
 			PostId: req.params.id,
 			commenterPseudo: req.body.commenterPseudo,
+			UserId: req.body.UserId,
 		});
 		const comment = await newComment.save();
 		return res.status(201).json(comment);
@@ -95,10 +104,7 @@ module.exports.commentPost = async (req, res) => {
 
 module.exports.editCommentPost = async (req, res) => {
 	try {
-		await CommentModel.update(
-			{ text: req.body.text },
-			{ where: { PostId: req.params.id } }
-		);
+		await CommentModel.update({ text: req.body.text }, { where: { PostId: req.params.id } });
 		res.status(201).send('Le commentaire à bien été modifié');
 	} catch {
 		res.status(500).send('Erreur lors de la modification du commentaire');
