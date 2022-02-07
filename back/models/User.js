@@ -30,7 +30,7 @@ const User = bdd.define('User', {
 		validate: {
 			min: {
 				args: [6],
-				msg: 'Le mot de passe est trop court (minimum 6 caractères)',
+				msg: 'Mot de passe invalide (minimum 6 caractères)',
 			},
 		},
 	},

@@ -1,4 +1,4 @@
-const { UserModel, PostModel, CommentModel } = require('../models/Index');
+const { UserModel, PostModel, CommentModel, LikeModel } = require('../models/Index');
 const fs = require('fs');
 const { promisify } = require('util');
 const pipeline = promisify(require('stream').pipeline);
@@ -60,10 +60,7 @@ module.exports.createPost = async (req, res) => {
 
 module.exports.updatePost = async (req, res) => {
 	try {
-		 await PostModel.update(
-			{ text: req.body.text },
-			{ where: { id: req.params.id } }
-		);
+		await PostModel.update({ text: req.body.text }, { where: { id: req.params.id } });
 		res.status(201).send('Le post à bien été modifié');
 	} catch (err) {
 		res.status(500).send('Erreur lors de la modification du post');
@@ -82,9 +79,28 @@ module.exports.deletePost = async (req, res) => {
 };
 
 // Likes / Unlikes
-module.exports.likePost = (req, res) => {};
+module.exports.likePost = async (req, res) => {
+	try {
+		await LikeModel.create({
+			PostId: req.params.id,
+			UserId: req.body.UserId,
+		});
+		return res.status(201).send('Commentaire liké');
+	} catch (err) {
+		res.status(500).send('Erreur lors du like');
+	}
+};
 
-module.exports.unlikePost = (req, res) => {};
+module.exports.unlikePost = async (req, res) => {
+	try {
+		await LikeModel.destroy({
+			where: { UserId: req.body.UserId },
+		});
+		res.status(201).send('Like annulé');
+	} catch {
+		res.status(500).send('Erreur lors de la suppression du like');
+	}
+};
 
 // Comments
 module.exports.commentPost = async (req, res) => {
