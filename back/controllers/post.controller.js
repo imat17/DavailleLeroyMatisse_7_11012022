@@ -80,7 +80,6 @@ module.exports.unlikePost = (req, res) => {};
 
 // Comments
 module.exports.commentPost = async (req, res) => {
-	// Problème postId
 	try {
 		const newComment = await CommentModel.create({
 			text: req.body.text,
@@ -96,9 +95,9 @@ module.exports.commentPost = async (req, res) => {
 
 module.exports.editCommentPost = async (req, res) => {
 	try {
-		const updatedComment = await CommentModel.update(
+		await CommentModel.update(
 			{ text: req.body.text },
-			{ where: { id: req.params.id } }
+			{ where: { PostId: req.params.id } }
 		);
 		res.status(201).send('Le commentaire à bien été modifié');
 	} catch {
@@ -109,7 +108,7 @@ module.exports.editCommentPost = async (req, res) => {
 module.exports.deleteCommentPost = async (req, res) => {
 	try {
 		await CommentModel.destroy({
-			where: { id: req.params.id },
+			where: { PostId: req.params.id },
 		});
 		res.status(200).json({ message: 'Le commentaire à bien été supprimé' });
 	} catch (err) {

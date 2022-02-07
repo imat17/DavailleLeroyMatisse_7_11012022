@@ -7,7 +7,7 @@ const Comment = bdd.define('Comment', {
 		allowNull: false,
 	},
 	commenterPseudo: {
-		type: DataTypes.TEXT,
+		type: DataTypes.STRING,
 		allowNull: false,
 	},
 });
