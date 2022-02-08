@@ -1,12 +1,11 @@
 header {
     width: 100%;
-    background-color: bisque;
+    background: $blue;
     .container__img  {
-        display: flex;
-        justify-content: center;
-        align-items: center;
+        @include flex-center;
         img {
-            
+            width: 35rem;
+            margin-left: -3.5rem;
         }
     }
 }

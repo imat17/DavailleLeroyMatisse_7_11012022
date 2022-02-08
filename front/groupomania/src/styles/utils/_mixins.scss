@@ -1,6 +1,5 @@
 @mixin btn-style {
-	background: rgb(147, 86, 220);
-	background: $degrade;
+	background: $blue;
 	border-radius: 2rem;
 	padding: 0.9rem;
 	width: 12.5rem;
@@ -9,10 +8,14 @@
 	color: $white;
 	border: none;
 	cursor: pointer;
-	box-shadow: 3px 10px 5px $dark-gray;
 	transition: opacity, box-shadow 0.7s ease-in-out;
 	&:hover {
-		opacity: 0.85;
-		box-shadow: 3px 10px 5px #c5c5c5;
+		opacity: 0.80;
 	}
+}
+
+@mixin flex-center {
+	display: flex;
+	justify-content: center;
+	align-items: center;
 }
