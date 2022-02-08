@@ -1,0 +1,29 @@
+.auth__form {
+	margin: 50px auto;
+	width: 600px;
+	background-color: aqua;
+	display: flex;
+	justify-content: center;
+	// align-items: center;
+    flex-direction: column;
+	ul {
+		display: flex;
+        align-items: center;
+        justify-content: space-around;
+        padding: 2rem;
+        li {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            @include btn-style;
+        }
+	}
+}
+
+form {
+    
+}
+
+.btn__active {
+    opacity: 1;
+}

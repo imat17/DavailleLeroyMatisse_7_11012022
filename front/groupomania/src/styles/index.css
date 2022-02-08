@@ -1,0 +1,61 @@
+*,
+::before,
+::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
+}
+
+a {
+  text-decoration: none;
+}
+
+header {
+  width: 100%;
+  background-color: bisque;
+}
+header .container__img {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.auth__form {
+  margin: 50px auto;
+  width: 600px;
+  background-color: aqua;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+}
+.auth__form ul {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  padding: 2rem;
+}
+.auth__form ul li {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #9356dc;
+  background: linear-gradient(352deg, #9356dc, #ff79da 100%);
+  border-radius: 2rem;
+  padding: 0.9rem;
+  width: 12.5rem;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #ffff;
+  border: none;
+  cursor: pointer;
+  box-shadow: 3px 10px 5px #eaeaea;
+  transition: opacity, box-shadow 0.7s ease-in-out;
+}
+.auth__form ul li:hover {
+  opacity: 0.85;
+  box-shadow: 3px 10px 5px #c5c5c5;
+}
+
+.btn__active {
+  opacity: 1;
+}/*# sourceMappingURL=index.css.map */

@@ -1,0 +1,18 @@
+@mixin btn-style {
+	background: rgb(147, 86, 220);
+	background: $degrade;
+	border-radius: 2rem;
+	padding: 0.9rem;
+	width: 12.5rem;
+	font-size: 0.9rem;
+	font-weight: 600;
+	color: $white;
+	border: none;
+	cursor: pointer;
+	box-shadow: 3px 10px 5px $dark-gray;
+	transition: opacity, box-shadow 0.7s ease-in-out;
+	&:hover {
+		opacity: 0.85;
+		box-shadow: 3px 10px 5px #c5c5c5;
+	}
+}

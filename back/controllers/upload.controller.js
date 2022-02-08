@@ -17,7 +17,7 @@ module.exports.uploadProfil = async (req, res) => {
 		// const errors = uploadErrors(err);
 		return res.status(201).json('Crée');
 	}
-	const fileName = req.body.pseudo + '.jpg';
+	let fileName = req.body.pseudo + '.jpg';
 
 	await pipeline(
 		req.file.stream,
@@ -27,13 +27,10 @@ module.exports.uploadProfil = async (req, res) => {
 	try {
 		await UserModel.update(
 			{ picture: './uploads/profil/' + fileName },
-			{ where: req.body.id },
-			(err, docs) => {
-				if (!err) return res.send(docs);
-				else return res.status(500).send({ message: err });
-			}
+			{ where: { id: req.body.id } },
+			res.status(201).json('Votre profil à bien été mis à jour')
 		);
 	} catch (err) {
-		return res.status(500).send({ message: err });
+		return res.status(500).send('Erreur lors de la modification du profil');
 	}
 };

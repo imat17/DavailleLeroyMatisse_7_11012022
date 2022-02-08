@@ -6,11 +6,11 @@ const { bdd } = require('../config/connect');
 
 const loadModel = async () => {
 	try {
-		await UserModel.hasMany(PostModel);
-		await UserModel.hasMany(LikeModel);
-		await UserModel.hasMany(CommentModel);
-		await PostModel.hasMany(CommentModel);
-		await PostModel.hasMany(LikeModel);
+		await UserModel.hasMany(PostModel, {onDelete: 'cascade'});
+		await UserModel.hasMany(LikeModel, {onDelete: 'cascade'});
+		await UserModel.hasMany(CommentModel, {onDelete: 'cascade'});
+		await PostModel.hasMany(CommentModel, {onDelete: 'cascade'});
+		await PostModel.hasMany(LikeModel, {onDelete: 'cascade'});
 		await bdd.sync();
 	} catch (error) {
 		console.log(error);

@@ -68,7 +68,20 @@ module.exports.updatePost = async (req, res) => {
 };
 
 module.exports.deletePost = async (req, res) => {
+	// La suppression de l'image ne fonctionne pas
 	try {
+		if (PostModel.picture) {
+			await PostModel.findOne({
+				where: { id: req.params.id },
+			});
+			const fileName = PostModel.picture.split('/posts')[1];
+			fs.unlink(`posts/${fileName}`, () => {
+				PostModel.destroy({
+					where: { id: req.params.id },
+				});
+			});
+		}
+
 		await PostModel.destroy({
 			where: { id: req.params.id },
 		});
