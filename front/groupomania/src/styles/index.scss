@@ -4,5 +4,8 @@
 @import './utils/mixins';
 
 @import './components/header';
-@import './components/authForm';
+@import './components/Auth/authForm';
 @import './pages/auth';
+@import './pages/home';
+@import './components/Home/postbar';
+@import './components/Home/thread';

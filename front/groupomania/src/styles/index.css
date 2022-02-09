@@ -16,6 +16,11 @@ body {
   font-family: "Raleway", sans-serif;
 }
 
+input, input:focus {
+  border: none;
+  outline: none;
+}
+
 header {
   width: 100%;
   background: #22444f;
@@ -34,7 +39,7 @@ header .container__img img {
   margin: 130px auto;
   max-width: 600px;
   background: #d86747;
-  border-radius: 10px;
+  border-radius: 6px;
   display: flex;
   justify-content: center;
   flex-direction: column;
@@ -108,4 +113,64 @@ form .submit__btn:hover {
 
 .btn__active {
   opacity: 0.3;
+}
+
+.postbar__container {
+  background: #d86747;
+  max-width: 800px;
+  margin: 30px auto;
+  height: 200px;
+  border-radius: 6px;
+  position: relative;
+}
+.postbar__container .input__post {
+  width: 70%;
+  height: 100px;
+  border-radius: 6px;
+  text-align: top;
+  resize: none;
+  font-size: 16px;
+  padding: 4px;
+}
+.postbar__container .input__submit {
+  background: #22444f;
+  border-radius: 2rem;
+  padding: 0.9rem;
+  width: 12.5rem;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #ffff;
+  border: none;
+  cursor: pointer;
+  transition: opacity, box-shadow 0.7s ease-in-out;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 2rem;
+  margin-bottom: 2rem;
+}
+.postbar__container .input__submit:hover {
+  opacity: 0.8;
+}
+.postbar__container .add__image {
+  position: absolute;
+  right: 40px;
+  top: 120px;
+  cursor: pointer;
+}
+.postbar__container .add__image img {
+  width: 3rem;
+}
+
+.post__container {
+  max-width: 900px;
+  margin: 50px auto;
+}
+.post__container li {
+  background: #d86747;
+  margin: 2rem;
+  border-radius: 6px;
+  max-width: 900px;
+  min-height: 500px;
 }/*# sourceMappingURL=index.css.map */

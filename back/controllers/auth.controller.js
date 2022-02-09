@@ -34,14 +34,16 @@ module.exports.signIn = async (req, res) => {
 				res.cookie('jwt', token, { httpOnly: true, maxAge });
 				res.status(200).json({ user: user.id });
 			} else {
-				res.json('Mot de passe incorrect')
+				res.json('Mot de passe incorrect');
 			}
+		} else {
+			res.json('Utilisateur inconnu');
 		}
 	} catch (err) {
-		const errors = signInErrors(err);
 		res.status(400).send(err);
 	}
 };
+
 
 module.exports.logout = async (req, res) => {
 	res.cookie('jwt', '', { maxAge: 1 }); // maxAge = 1ms

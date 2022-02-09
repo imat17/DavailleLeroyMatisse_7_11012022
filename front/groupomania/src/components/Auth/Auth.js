@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import SignUp from './SignUp';
 import SignIn from './SignIn';
 
-
 const Auth = () => {
 	// Utilisation des hooks pour les modals
 	const [signUpModal, setSignUpModal] = useState(true);

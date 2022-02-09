@@ -24,7 +24,7 @@ const SignIn = () => {
 				console.log(res);
 				if (res.data.errors) {
 					emailError.innerHTML = res.data.errors.email;
-					passwordError.innerHTML = res.data.errors.password;
+					passwordError.innerHTML = res.data.errors.email;
 				} else {
 					window.location = '/home';
 				}

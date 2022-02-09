@@ -1,0 +1,11 @@
+.post__container {
+	max-width: 900px;
+	margin: 50px auto;
+	li {
+		background: $orange;
+		margin: 2rem;
+		border-radius: $border-radius;
+		max-width: 900px;
+		min-height: 500px;
+	}
+}
