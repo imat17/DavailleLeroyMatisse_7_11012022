@@ -4,10 +4,10 @@ const { signUpErrors, signInErrors } = require('../utils/errors.utils');
 const bcrypt = require('bcrypt');
 
 //Json Web Token
-const maxAge = 3 * 24 * 60 * 60 * 1000;
+const maxAge = 1 * 24 * 60 * 60 * 1000;
 const createToken = (id) => {
 	return jwt.sign({ id }, process.env.TOKEN_SECRET, {
-		expiresIn: maxAge, // 3 jours
+		expiresIn: maxAge, // 1 jour
 	});
 };
 
@@ -19,7 +19,7 @@ module.exports.signUp = async (req, res) => {
 		res.status(201).json({ user: user.id });
 	} catch (err) {
 		const errors = signUpErrors(err);
-		res.status(400).send(err);
+		res.status(400).send({ errors });
 	}
 };
 
@@ -31,19 +31,18 @@ module.exports.signIn = async (req, res) => {
 			const validPassword = await bcrypt.compare(password, user.password);
 			if (validPassword) {
 				const token = createToken(user.id);
-				res.cookie('jwt', token, { httpOnly: true, maxAge });
+				res.cookie('jwt', token, { httpOnly: true, secure: true, maxAge });
 				res.status(200).json({ user: user.id });
 			} else {
-				res.json('Mot de passe incorrect');
+				res.status(401).json({ message: 'Mot de passe incorrect' });
 			}
 		} else {
-			res.json('Utilisateur inconnu');
+			res.status(401).json({ message: `Email introuvable` });
 		}
 	} catch (err) {
-		res.status(400).send(err);
+		res.status(500);
 	}
 };
-
 
 module.exports.logout = async (req, res) => {
 	res.cookie('jwt', '', { maxAge: 1 }); // maxAge = 1ms

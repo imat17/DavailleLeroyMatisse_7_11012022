@@ -1,11 +1,21 @@
 header {
     width: 100%;
     background: $blue;
+    position: relative;
     .container__img  {
         @include flex-center;
         img {
             width: 35rem;
             margin-left: -3.5rem;
+        }
+    }
+    .disconnect {
+        position: absolute;
+        right: 50px;
+        top: 40px;
+        cursor: pointer;
+        img {
+            width: 3rem;
         }
     }
 }

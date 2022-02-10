@@ -5,9 +5,14 @@ const AllPost = () => {
 	const [posts, setPosts] = useState(null);
 
 	useEffect(() => {
-		axios.get(`${process.env.REACT_APP_API_URL}api/post`).then((response) => {
-			setPosts(response.data);
-		});
+		axios
+			.get(`${process.env.REACT_APP_API_URL}api/post`, { withCredentials: true })
+			.then((response) => {
+				setPosts(response.data);
+			})
+			.catch((err) => {
+				console.log(err);
+			});
 	}, []);
 
 	if (!posts) return null;
@@ -23,7 +28,7 @@ const AllPost = () => {
 						<p className='user__id'>{post.UserId}</p>
 						<p className='timestamp'>{post.createdAt}</p>
 						<div className='info__container'>
-							<div className="pic__container">
+							<div className='pic__container'>
 								<img src={post.picture} alt='' />
 							</div>
 							<p className='info__text'>{post.text}</p>

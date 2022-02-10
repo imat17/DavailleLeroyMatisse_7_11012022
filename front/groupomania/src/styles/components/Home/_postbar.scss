@@ -21,13 +21,10 @@
 		margin-top: 2rem;
 		margin-bottom: 2rem;
 	}
-	.add__image {
+	.input__file {
 		position: absolute;
-		right: 40px;
-		top: 120px;
-		cursor: pointer;
-		img {
-			width: 3rem;
-		}
+		font-size: 12px;
+		bottom: 0;
+		right: 25px;
 	}
 }

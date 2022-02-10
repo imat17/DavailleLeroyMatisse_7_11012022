@@ -24,6 +24,7 @@ input, input:focus {
 header {
   width: 100%;
   background: #22444f;
+  position: relative;
 }
 header .container__img {
   display: flex;
@@ -33,6 +34,15 @@ header .container__img {
 header .container__img img {
   width: 35rem;
   margin-left: -3.5rem;
+}
+header .disconnect {
+  position: absolute;
+  right: 50px;
+  top: 40px;
+  cursor: pointer;
+}
+header .disconnect img {
+  width: 3rem;
 }
 
 .auth__form {
@@ -153,14 +163,11 @@ form .submit__btn:hover {
 .postbar__container .input__submit:hover {
   opacity: 0.8;
 }
-.postbar__container .add__image {
+.postbar__container .input__file {
   position: absolute;
-  right: 40px;
-  top: 120px;
-  cursor: pointer;
-}
-.postbar__container .add__image img {
-  width: 3rem;
+  font-size: 12px;
+  bottom: 0;
+  right: 25px;
 }
 
 .post__container {

@@ -5,7 +5,7 @@ const pipeline = promisify(require('stream').pipeline);
 
 module.exports.readPost = async (req, res) => {
 	try {
-		const allPosts = await PostModel.findAll();
+		const allPosts = await PostModel.findAll()
 		res.status(200).send(allPosts);
 	} catch (err) {
 		res.status(500).send(err);
@@ -54,7 +54,7 @@ module.exports.createPost = async (req, res) => {
 		const post = await newPost.save();
 		return res.status(201).json(post);
 	} catch (err) {
-		return res.status(400).send(err);
+		return res.status(500).send(err);
 	}
 };
 
