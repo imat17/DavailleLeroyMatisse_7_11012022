@@ -20,18 +20,23 @@ const AllPost = () => {
 	return (
 		<>
 			{posts.map((post) => {
+				const date = post.createdAt;
 				return (
 					<li key={post.id}>
-						<div className='profilepic__container'>
-							<img src='' alt='' />
+						<div className='about__post'>
+							<div className='info__container'>
+								<img src={post.User.picture} alt='' />
+								<p className='user__id'>{post.User.pseudo}</p>
+							</div>
+							<div className='timestamp__container'>
+								<p className='timestamp'>{date}</p>
+							</div>
 						</div>
-						<p className='user__id'>{post.UserId}</p>
-						<p className='timestamp'>{post.createdAt}</p>
-						<div className='info__container'>
+						<div className='content__container'>
+							<p className='info__text'>{post.text}</p>
 							<div className='pic__container'>
 								<img src={post.picture} alt='' />
 							</div>
-							<p className='info__text'>{post.text}</p>
 						</div>
 					</li>
 				);

@@ -5,6 +5,7 @@ require('dotenv').config();
 const bdd = new Sequelize(process.env.DATABASE, process.env.USER, process.env.PASSWORD, {
 	host: process.env.HOST,
 	dialect: process.env.DIALECT,
+	timezone: '+1:00',
 });
 const connect = async () => {
 	try {

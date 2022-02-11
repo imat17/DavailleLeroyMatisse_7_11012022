@@ -5,7 +5,11 @@ const pipeline = promisify(require('stream').pipeline);
 
 module.exports.readPost = async (req, res) => {
 	try {
-		const allPosts = await PostModel.findAll()
+		const allPosts = await PostModel.findAll({
+			include: [
+				{ model: UserModel},
+			],
+		});
 		res.status(200).send(allPosts);
 	} catch (err) {
 		res.status(500).send(err);

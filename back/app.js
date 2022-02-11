@@ -34,8 +34,8 @@ app.use(cookieParser());
 // jwt à chaque requête
 app.get('*', checkUser);
 // Si token présent lors de l'authentification
-app.get('/jwtid', requireAuth, (req, res) => {
-	res.status(200).send(res.locals.user.id);
+app.get('/jwtid', requireAuth,  (req, res) => {
+	 res.sendStatus(200).send(res.locals.user.id)
 });
 
 // Routes

@@ -18,7 +18,7 @@ const PostBar = () => {
 		postFormData.append('UserId', UserId);
 		postFormData.append('file', file);
 
-		 axios({
+		axios({
 			method: 'post',
 			url: `${process.env.REACT_APP_API_URL}api/post`,
 			withCredentials: true,
@@ -31,7 +31,7 @@ const PostBar = () => {
 				console.log(err);
 			});
 	};
-	
+
 	return (
 		<div className='postbar__container'>
 			<div className='profile__picture'>
@@ -48,7 +48,7 @@ const PostBar = () => {
 					placeholder='Exprimez-vous !'
 				/>
 				<input type='file' onChange={handleFile} className='input__file' />
-				<label htmlFor="file" className='label__file'></label>
+				<label htmlFor='file' className='label__file'></label>
 				<input className='input__submit' type='submit' />
 			</form>
 		</div>
