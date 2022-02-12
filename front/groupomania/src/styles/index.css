@@ -44,6 +44,15 @@ header .disconnect {
 header .disconnect img {
   width: 3rem;
 }
+header .arrow {
+  position: absolute;
+  left: 50px;
+  top: 40px;
+  cursor: pointer;
+}
+header .arrow img {
+  width: 3rem;
+}
 
 .auth__form {
   margin: 130px auto;
@@ -145,9 +154,13 @@ form .submit__btn:hover {
   margin-bottom: 20px;
   max-width: 8rem;
 }
-.profile__pic img {
+.profile__pic img:nth-child(1) {
   max-width: 100%;
   border-radius: 60px;
+}
+.profile__pic img:nth-child(2) {
+  cursor: pointer;
+  width: 2rem;
 }
 
 .profile__input {
@@ -232,7 +245,7 @@ form .submit__btn:hover {
   border: 2px solid #d86747;
   max-width: 900px;
   min-height: 250px;
-  background-color: #22444f;
+  background-color: rgba(34, 68, 79, 0.9);
   color: white;
   font-weight: bold;
 }

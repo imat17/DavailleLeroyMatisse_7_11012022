@@ -11,9 +11,13 @@
 .profile__pic {
     margin-bottom: 20px;
     max-width: 8rem;
-    img {
+    img:nth-child(1) {
         max-width: 100%;
         border-radius: 60px;
+    }
+    img:nth-child(2) {
+        cursor: pointer;
+        width: 2rem;
     }
 }
 

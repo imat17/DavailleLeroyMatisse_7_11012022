@@ -1,7 +1,7 @@
 import React, { useContext, useState } from 'react';
-import { NavLink } from 'react-router-dom';
 import axios from 'axios';
 import { UidContext } from '../AppContext';
+import imageFile from '../../media/icons/file-image.png';
 
 const ProfileForm = () => {
 	const [pseudo, setPseudo] = useState('');
@@ -36,11 +36,11 @@ const ProfileForm = () => {
 		})
 			.then((res) => {
 				console.log(res);
+				window.location = '/';
 			})
 			.catch((err) => {
 				console.log(err);
 			});
-		
 	};
 
 	const editProfile = () => {
@@ -67,16 +67,30 @@ const ProfileForm = () => {
 		<>
 			<div className='profile__pic'>
 				<img src={file} alt='' />
+				<input type='file' onChange={(e) => setFile(e.target.files[0])} />
+				{/* <img src={imageFile} alt="" /> */}
 			</div>
 			<form action='' onSubmit={editProfile} id='profile__form'>
 				<label htmlFor='email'>Email</label>
 				<br />
-				<input type='text' name='email' id='email' onChange='' value={email} />
+				<input
+					type='text'
+					name='email'
+					id='email'
+					onChange={(e) => setEmail(e.target.value)}
+					value={email}
+				/>
 				<div className='email__error'></div>
 				<br />
 				<label htmlFor='pseudo'>Pseudo</label>
 				<br />
-				<input type='text' name='pseudo' id='pseudo' onChange='' value={pseudo} />
+				<input
+					type='text'
+					name='pseudo'
+					id='pseudo'
+					onChange={(e) => setPseudo(e.target.value)}
+					value={pseudo}
+				/>
 				<div className='pseudo__error'></div>
 				<div className='profile__input'>
 					<input type='submit' value='Sauvegarder' />

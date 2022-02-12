@@ -18,4 +18,13 @@ header {
             width: 3rem;
         }
     }
+    .arrow {
+        position: absolute;
+        left: 50px;
+        top: 40px;
+        cursor: pointer;
+        img {
+            width: 3rem;
+        }
+    }
 }

@@ -1,5 +1,5 @@
 import React from 'react';
-import LogoutImg from '../media/icons/power-button.svg';
+import LogoutImg from '../../media/icons/power-button.svg';
 import axios from 'axios';
 import cookie from 'js-cookie';
 import { NavLink } from 'react-router-dom';
