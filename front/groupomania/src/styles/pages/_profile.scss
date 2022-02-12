@@ -1,0 +1,31 @@
+.profile__container {
+    margin: 130px auto;
+	max-width: 600px;
+	background: $orange;
+	border-radius: $border-radius;
+	@include flex-center;
+	flex-direction: column;
+    padding: 50px;
+}
+
+.profile__pic {
+    margin-bottom: 20px;
+    max-width: 8rem;
+    img {
+        max-width: 100%;
+        border-radius: 60px;
+    }
+}
+
+.profile__input {
+    display: flex;
+    justify-content: space-around;
+    padding-top: 50px;
+    input {
+        @include btn-style;
+        @include flex-center;
+    }
+    input:nth-child(2) {
+        background-color: red!important;
+    }
+}

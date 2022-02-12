@@ -1,12 +1,12 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import axios from 'axios';
+import { UidContext } from '../AppContext';
 
 const PostBar = () => {
 	const [text, setText] = useState('');
 	const [file, setFile] = useState(null);
-
-	const UserId = 34;
-
+	const uid = useContext(UidContext)
+	
 	const handleFile = (e) => {
 		console.log(e.target.files[0]);
 		setFile(e.target.files[0]);
@@ -15,7 +15,7 @@ const PostBar = () => {
 	const handlePost = () => {
 		const postFormData = new FormData();
 		postFormData.append('text', text);
-		postFormData.append('UserId', UserId);
+		postFormData.append('UserId', uid);
 		postFormData.append('file', file);
 
 		axios({

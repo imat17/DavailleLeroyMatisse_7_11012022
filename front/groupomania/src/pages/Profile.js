@@ -1,15 +1,16 @@
-// import React from 'react';
-// import Auth from '../components/Auth/Auth';
+import React from 'react';
+import Header from '../components/Header';
+import ProfileForm from '../components/Profil/Profile';
 
+const Profile = () => {
+	return (
+		<div className='profile__page'>
+			<Header disconnectDisplay={true} />
+			<div className='profile__container'>
+				<ProfileForm />
+			</div>
+		</div>
+	);
+};
 
-// const Profile = () => {
-// 	return (
-// 		<div className='profile__page'>
-// 			<div className='container__auth'>
-// 				<Auth />
-// 			</div>
-// 		</div>
-// 	);
-// };
-
-// export default Profile;
+export default Profile;

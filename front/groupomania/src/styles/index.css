@@ -129,6 +129,54 @@ form .submit__btn:hover {
   position: relative;
 }
 
+.profile__container {
+  margin: 130px auto;
+  max-width: 600px;
+  background: #d86747;
+  border-radius: 6px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  padding: 50px;
+}
+
+.profile__pic {
+  margin-bottom: 20px;
+  max-width: 8rem;
+}
+.profile__pic img {
+  max-width: 100%;
+  border-radius: 60px;
+}
+
+.profile__input {
+  display: flex;
+  justify-content: space-around;
+  padding-top: 50px;
+}
+.profile__input input {
+  background: #22444f;
+  border-radius: 2rem;
+  padding: 0.9rem;
+  width: 12.5rem;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #ffff;
+  border: none;
+  cursor: pointer;
+  transition: opacity, box-shadow 0.7s ease-in-out;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.profile__input input:hover {
+  opacity: 0.8;
+}
+.profile__input input:nth-child(2) {
+  background-color: red !important;
+}
+
 .postbar__container {
   background: #d86747;
   max-width: 800px;
