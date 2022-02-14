@@ -169,6 +169,7 @@ form .submit__btn:hover {
   padding-top: 50px;
 }
 .profile__input input {
+  padding: 0 !important;
   background: #22444f;
   border-radius: 2rem;
   padding: 0.9rem;
@@ -187,6 +188,7 @@ form .submit__btn:hover {
   opacity: 0.8;
 }
 .profile__input input:nth-child(2) {
+  text-align: center;
   background-color: red !important;
 }
 

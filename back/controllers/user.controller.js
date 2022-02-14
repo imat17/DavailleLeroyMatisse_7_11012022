@@ -38,6 +38,7 @@ module.exports.deleteUser = async (req, res) => {
 			where: { UserId: req.params.id },
 		});
 		res.cookie('jwt', '', { maxAge: 1 }); // maxAge = 1ms
+		// res.redirect('/');
 		res.status(200).json({ message: `L'utilisateur à bien été supprimé` });
 	} catch (err) {
 		return res.status(500).json({ message: err });

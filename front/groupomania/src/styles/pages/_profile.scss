@@ -26,10 +26,12 @@
     justify-content: space-around;
     padding-top: 50px;
     input {
+        padding: 0!important;
         @include btn-style;
         @include flex-center;
     }
     input:nth-child(2) {
+        text-align: center;
         background-color: red!important;
     }
 }

@@ -38,17 +38,22 @@ const ProfileForm = () => {
 			});
 	}, [uid]);
 
-	const deleteProfile = async () => {
-		window.confirm('Voulez-vous vraiment supprimer votre compte ? Cette action est irréversible.');
-		await axios({
+	const deleteProfile = () => {
+		window.confirm(
+			'Êtes-vous sûr de vouloir supprimer votre compte ? Cette action est irréversible.'
+		);
+		axios({
 			method: 'delete',
 			url: `${process.env.REACT_APP_API_URL}api/user/${uid}`,
 			withCredentials: true,
 		})
 			.then((res) => {
-				// removeCookie('jwt');
-				// window.location.href = '/';
-				console.log(res);
+				if (res.data.errors) {
+					console.log(res.data.errors)
+				} else {
+					console.log(res)
+					window.location = '/';
+				}
 			})
 			.catch((err) => {
 				console.log(err);
@@ -128,7 +133,7 @@ const ProfileForm = () => {
 				<div className='pseudo__error'></div>
 				<div className='profile__input'>
 					<input type='submit' value='Sauvegarder' />
-					<input type='' onClick={deleteProfile} value='Supprimer mon compte' />
+					<input type='' onClick={deleteProfile} defaultValue='Supprimer mon compte' />
 				</div>
 			</form>
 		</>
