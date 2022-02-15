@@ -13,7 +13,7 @@
     max-width: 8rem;
     img:nth-child(1) {
         max-width: 100%;
-        border-radius: 60px;
+        border-radius: 20%;
     }
     img:nth-child(2) {
         cursor: pointer;
@@ -25,7 +25,9 @@
     display: flex;
     justify-content: space-around;
     padding-top: 50px;
+    @include responsive-profile;
     input {
+        margin: 1rem;
         padding: 0!important;
         @include btn-style;
         @include flex-center;

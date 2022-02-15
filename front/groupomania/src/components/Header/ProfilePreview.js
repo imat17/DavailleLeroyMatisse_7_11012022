@@ -9,7 +9,6 @@ const ProfilePreview = () => {
                     <img src="" alt="" />
                 </div>
                 <div className="preview__content">
-                    <p className="preview__user">JeanTest</p>
                     <p className="preview__link">Voir mon profil</p>
                 </div>
             </NavLink>

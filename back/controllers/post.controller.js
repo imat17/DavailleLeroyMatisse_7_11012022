@@ -6,9 +6,7 @@ const pipeline = promisify(require('stream').pipeline);
 module.exports.readPost = async (req, res) => {
 	try {
 		const allPosts = await PostModel.findAll({
-			include: [
-				{ model: UserModel},
-			],
+			include: [{ model: UserModel }, { model: CommentModel, include: UserModel }],
 		});
 		res.status(200).send(allPosts);
 	} catch (err) {
@@ -74,6 +72,7 @@ module.exports.updatePost = async (req, res) => {
 module.exports.deletePost = async (req, res) => {
 	// La suppression de l'image ne fonctionne pas
 	try {
+		// A MODIFIER
 		if (PostModel.picture) {
 			await PostModel.findOne({
 				where: { id: req.params.id },

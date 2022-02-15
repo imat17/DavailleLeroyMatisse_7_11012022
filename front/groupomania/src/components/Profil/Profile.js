@@ -1,7 +1,6 @@
 import React, { useContext, useState, useEffect } from 'react';
 import axios from 'axios';
 import { UidContext } from '../AppContext';
-import cookie from 'js-cookie';
 // import imageFile from '../../media/icons/file-image.png';
 
 const ProfileForm = () => {
@@ -11,15 +10,9 @@ const ProfileForm = () => {
 
 	const uid = useContext(UidContext);
 
-	// console.log(file);
+	console.log(file);
 	// console.log(pseudo);
 	// console.log(email);
-
-	const removeCookie = (key) => {
-		if (window !== undefined) {
-			cookie.remove(key, { expire: 1 });
-		}
-	};
 
 	useEffect(() => {
 		axios({
@@ -28,7 +21,6 @@ const ProfileForm = () => {
 			withCredentials: true,
 		})
 			.then((res) => {
-				// console.log(res);
 				setPseudo(res.data.pseudo);
 				setEmail(res.data.email);
 				setFile(res.data.picture);
@@ -49,9 +41,9 @@ const ProfileForm = () => {
 		})
 			.then((res) => {
 				if (res.data.errors) {
-					console.log(res.data.errors)
+					console.log(res.data.errors);
 				} else {
-					console.log(res)
+					console.log(res);
 					window.location = '/';
 				}
 			})
@@ -77,6 +69,10 @@ const ProfileForm = () => {
 				console.log(err);
 			});
 	};
+
+	// const imageChange = (e) => {
+	// 	setFile(URL.createObjectURL(e.target.files[0]));
+	// };
 
 	const editProfilePicture = () => {
 		const formPicture = new FormData();
@@ -106,7 +102,7 @@ const ProfileForm = () => {
 		<>
 			<form action='' onSubmit={editData} id='profile__form'>
 				<div className='profile__pic'>
-					<img src={file} alt='' />
+					<img src={file} alt='Profilepicture' />
 					<input type='file' onChange={(e) => setFile(e.target.files[0])} />
 					{/* <img src={imageFile} alt="" /> */}
 				</div>

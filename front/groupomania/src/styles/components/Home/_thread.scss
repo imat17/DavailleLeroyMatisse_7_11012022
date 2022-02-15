@@ -17,11 +17,20 @@
 		justify-content: space-between;
 		padding: 15px;
 		img {
-			max-width: 4rem;
+			width: 4rem;
 			border-radius: 30px;
 		}
 		.user__id {
 			font-size: 18px;
+		}
+		.trash__container {
+			display: flex;
+			justify-content: flex-end;
+			padding-top: 10px;
+			.trash {
+				width: 1.5rem;
+				cursor: pointer;
+			}
 		}
 	}
 	.info__container {
@@ -45,10 +54,13 @@
 			width: 100%;
 			height: 450px;
 			padding: 20px;
+			border-radius: 50px;
 			img {
 				object-fit: contain;
 				height: 100%;
 				width: 100%;
+				filter: drop-shadow(0px 0px 1px rgba(0, 0, 0, 0.3))
+					drop-shadow(0px 0px 10px rgba(0, 0, 0, 0.3));
 			}
 		}
 	}

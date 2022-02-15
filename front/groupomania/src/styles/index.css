@@ -12,7 +12,7 @@ a {
 }
 
 body {
-  background: #ffff;
+  background: #f0f2f5;
   font-family: "Raleway", sans-serif;
 }
 
@@ -25,15 +25,34 @@ header {
   width: 100%;
   background: #22444f;
   position: relative;
+  min-height: 128px;
 }
 header .container__img {
   display: flex;
   justify-content: center;
   align-items: center;
 }
-header .container__img img {
+header .container__img img:nth-child(1) {
   width: 35rem;
   margin-left: -3.5rem;
+}
+@media screen and (max-width: 700px) {
+  header .container__img img:nth-child(1) {
+    display: none;
+  }
+}
+header .container__img img:nth-child(2) {
+  width: 8rem;
+}
+@media screen and (max-width: 700px) {
+  header .container__img img:nth-child(2) {
+    display: visible;
+  }
+}
+@media screen and (min-width: 700px) {
+  header .container__img img:nth-child(2) {
+    display: none;
+  }
 }
 header .disconnect {
   position: absolute;
@@ -52,6 +71,32 @@ header .arrow {
 }
 header .arrow img {
   width: 3rem;
+}
+header .profile__preview {
+  position: absolute;
+  background: #d86747;
+  opacity: 0.7;
+  border-radius: 6px;
+  width: 250px;
+  height: 80px;
+  top: 23px;
+  right: 150px;
+}
+header .profile__preview .preview__img {
+  width: 30%;
+}
+header .profile__preview .preview__img img {
+  width: 100%;
+}
+header .profile__preview .preview__content {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 70%;
+}
+header .profile__preview .preview__content__link {
+  width: 100%;
+  text-align: end;
 }
 
 .auth__form {
@@ -79,7 +124,7 @@ header .arrow img {
   width: 12.5rem;
   font-size: 0.9rem;
   font-weight: 600;
-  color: #ffff;
+  color: #f0f2f5;
   border: none;
   cursor: pointer;
   transition: opacity, box-shadow 0.7s ease-in-out;
@@ -115,7 +160,7 @@ form .submit__btn {
   width: 12.5rem;
   font-size: 0.9rem;
   font-weight: 600;
-  color: #ffff;
+  color: #f0f2f5;
   border: none;
   cursor: pointer;
   transition: opacity, box-shadow 0.7s ease-in-out;
@@ -156,7 +201,7 @@ form .submit__btn:hover {
 }
 .profile__pic img:nth-child(1) {
   max-width: 100%;
-  border-radius: 60px;
+  border-radius: 20%;
 }
 .profile__pic img:nth-child(2) {
   cursor: pointer;
@@ -168,7 +213,14 @@ form .submit__btn:hover {
   justify-content: space-around;
   padding-top: 50px;
 }
+@media screen and (max-width: 430px) {
+  .profile__input {
+    display: flex;
+    flex-direction: column;
+  }
+}
 .profile__input input {
+  margin: 1rem;
   padding: 0 !important;
   background: #22444f;
   border-radius: 2rem;
@@ -176,7 +228,7 @@ form .submit__btn:hover {
   width: 12.5rem;
   font-size: 0.9rem;
   font-weight: 600;
-  color: #ffff;
+  color: #f0f2f5;
   border: none;
   cursor: pointer;
   transition: opacity, box-shadow 0.7s ease-in-out;
@@ -216,7 +268,7 @@ form .submit__btn:hover {
   width: 12.5rem;
   font-size: 0.9rem;
   font-weight: 600;
-  color: #ffff;
+  color: #f0f2f5;
   border: none;
   cursor: pointer;
   transition: opacity, box-shadow 0.7s ease-in-out;
@@ -258,11 +310,20 @@ form .submit__btn:hover {
   padding: 15px;
 }
 .post__container .about__post img {
-  max-width: 4rem;
+  width: 4rem;
   border-radius: 30px;
 }
 .post__container .about__post .user__id {
   font-size: 18px;
+}
+.post__container .about__post .trash__container {
+  display: flex;
+  justify-content: flex-end;
+  padding-top: 10px;
+}
+.post__container .about__post .trash__container .trash {
+  width: 1.5rem;
+  cursor: pointer;
 }
 .post__container .info__container {
   display: flex;
@@ -286,36 +347,18 @@ form .submit__btn:hover {
   width: 100%;
   height: 450px;
   padding: 20px;
+  border-radius: 50px;
 }
 .post__container .content__container .pic__container img {
   object-fit: contain;
   height: 100%;
   width: 100%;
+  filter: drop-shadow(0px 0px 1px rgba(0, 0, 0, 0.3)) drop-shadow(0px 0px 10px rgba(0, 0, 0, 0.3));
 }
 
-.profile__preview {
-  position: absolute;
-  background: #d86747;
-  opacity: 0.7;
-  border-radius: 6px;
-  width: 250px;
-  height: 80px;
-  top: 23px;
-  right: 150px;
-}
-.profile__preview .preview__img {
-  width: 30%;
-}
-.profile__preview .preview__img img {
-  width: 100%;
-}
-.profile__preview .preview__content {
+.comment__container {
+  background-color: #22444f;
+  width: 500px;
+  height: 500px;
   display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-  width: 70%;
-}
-.profile__preview .preview__content__link {
-  width: 100%;
-  text-align: end;
 }/*# sourceMappingURL=index.css.map */
