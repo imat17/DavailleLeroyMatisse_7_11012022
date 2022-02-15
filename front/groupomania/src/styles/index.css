@@ -289,6 +289,13 @@ form .submit__btn:hover {
   right: 25px;
 }
 
+.comment__container {
+  background-color: #22444f;
+  width: 500px;
+  height: 500px;
+  display: flex;
+}
+
 .post__container {
   max-width: 900px;
   margin: 50px auto;
@@ -354,11 +361,4 @@ form .submit__btn:hover {
   height: 100%;
   width: 100%;
   filter: drop-shadow(0px 0px 1px rgba(0, 0, 0, 0.3)) drop-shadow(0px 0px 10px rgba(0, 0, 0, 0.3));
-}
-
-.comment__container {
-  background-color: #22444f;
-  width: 500px;
-  height: 500px;
-  display: flex;
 }/*# sourceMappingURL=index.css.map */

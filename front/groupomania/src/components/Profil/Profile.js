@@ -11,9 +11,7 @@ const ProfileForm = () => {
 	const uid = useContext(UidContext);
 
 	console.log(file);
-	// console.log(pseudo);
-	// console.log(email);
-
+	
 	useEffect(() => {
 		axios({
 			method: 'get',

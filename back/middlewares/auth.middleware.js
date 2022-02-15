@@ -25,23 +25,32 @@ module.exports.checkUser = (req, res, next) => {
 };
 
 // Vérification du token lors de l'authentification
-module.exports.requireAuth =  (req,res, next) => {
+module.exports.requireAuth = (req, res, next) => {
 	try {
 		const token = req.cookies.jwt;
 		if (token) {
-			  jwt.verify(token, process.env.TOKEN_SECRET, async (err, decodedToken) => {
-				 if (err) {
-					 console.log(err)
-				 } else {
-					 console.log(decodedToken.id);
+			jwt.verify(token, process.env.TOKEN_SECRET, async (err, decodedToken) => {
+				if (err) {
+					console.log(err);
+				} else {
+					console.log(decodedToken.id);
 					await res.json(res.locals.user.id);
-					 next();
-				 }
-			 })
+					next();
+				}
+			});
 		} else {
-			console.log('pas de token')
+			console.log('pas de token');
 		}
 	} catch (err) {
-		console.log(err)
+		console.log(err);
 	}
+};
+
+const getUserId = (req) => {
+	const token = req.cookies.jwt;
+	const decodedToken = jwt.verify(token,process.env.TOKEN_SECRET);
+	const UserId = decodedToken.id;
+	return UserId;
 }
+
+module.exports.getUserId = getUserId;

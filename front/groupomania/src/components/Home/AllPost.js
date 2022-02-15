@@ -6,7 +6,7 @@ import OnePost from './OnePost';
 const AllPost = () => {
 	const [posts, setPosts] = useState(null);
 	const uid = useContext(UidContext);
-	console.log(posts);
+	// console.log(posts);
 
 	useEffect(() => {
 		axios
@@ -21,11 +21,12 @@ const AllPost = () => {
 
 	if (!posts) return null;
 
-	return <>
-		{posts.map((post) => {
-			return <OnePost postInfo={post} key={post.id}/>
-		})}
-		
-	</>;
+	return (
+		<>
+			{posts.map((post) => {
+				return <OnePost postInfo={post} key={post.id} />;
+			})}
+		</>
+	);
 };
 export default AllPost;

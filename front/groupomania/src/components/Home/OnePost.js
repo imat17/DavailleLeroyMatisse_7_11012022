@@ -2,9 +2,11 @@ import React, { useContext } from 'react';
 import { UidContext } from '../AppContext';
 import axios from 'axios';
 import Trash from '../../media/icons/trash.png';
+import Comment from './Comment';
 
 const OnePost = (props) => {
 	const uid = useContext(UidContext);
+	// console.log(props);
 
 	const deletePost = () => {
 		axios
@@ -33,26 +35,29 @@ const OnePost = (props) => {
 	};
 
 	return (
-		<>
-			<li>
-				<div className='about__post'>
-					<div className='info__container'>
-						<img src={props.postInfo.User.picture} alt='' />
-						<p className='user__id'>{props.postInfo.User.pseudo}</p>
-					</div>
-					<div className='timestamp__container'>
-						<p className='timestamp'>{props.postInfo.createdAt}</p>
-						{trashDisplay()}
-					</div>
+		<li>
+			<div className='about__post'>
+				<div className='info__container'>
+					<img src={props.postInfo.User.picture} alt='profile pic' />
+					<p className='user__id'>{props.postInfo.User.pseudo}</p>
 				</div>
-				<div className='content__container'>
-					<p className='info__text'>{props.postInfo.text}</p>
-					<div className='pic__container'>
-						<img src={props.postInfo.picture} alt='' />
-					</div>
+				<div className='timestamp__container'>
+					<p className='timestamp'>{props.postInfo.createdAt}</p>
+					{trashDisplay()}
 				</div>
-			</li>
-		</>
+			</div>
+			<div className='content__container'>
+				<p className='info__text'>{props.postInfo.text}</p>
+				<div className='pic__container'>
+					<img src={props.postInfo.picture} alt='profile pic' />
+				</div>
+			</div>
+			<Comment
+				listComments={props.postInfo.Comments}
+				postId={props.postInfo.id}
+				key={props.postInfo.Comments.id}
+			/>
+		</li>
 	);
 };
 
