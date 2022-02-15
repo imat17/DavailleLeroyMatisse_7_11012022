@@ -4,8 +4,8 @@ const Comment = (props) => {
 	// console.log(props)
 	const commentsList = props.listComments;
 	const idPost = props.postId;
-	console.log(commentsList);
-	console.log(idPost);
+	// console.log(commentsList);
+	// console.log(idPost);
 
 	return (
 		<>
