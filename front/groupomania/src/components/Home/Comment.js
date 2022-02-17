@@ -1,7 +1,5 @@
 import React, { useState, useContext } from 'react';
 import { UidContext } from '../AppContext';
-import { EditText, EditTextarea } from 'react-edit-text';
-import 'react-edit-text/dist/index.css';
 import Trash from '../../media/icons/trash.png';
 import Edit from '../../media/icons/edit.png';
 import axios from 'axios';
@@ -13,16 +11,16 @@ dayjs.extend(relativeTime);
 const Comment = (props) => {
 	const comment = props.comment;
 	const [newText, setNewText] = useState('');
-	// const [toggle, setToggle] = useState(false);
 	const uid = useContext(UidContext);
-	console.log(props)
+	// console.log(props)
 	console.log(newText);
 
 	const deleteComment = () => {
-		axios
-			.patch(`${process.env.REACT_APP_API_URL}api/post/delete-comment-post/${comment.id}`, {
-				withCredentials: true,
-			})
+		axios({
+			method: 'patch',
+			url: `${process.env.REACT_APP_API_URL}api/post/delete-comment-post/${comment.id}`,
+			withCredentials: true,
+		})
 			.then((res) => {
 				console.log(res);
 				window.location.reload();
@@ -33,16 +31,16 @@ const Comment = (props) => {
 	};
 
 	const editComment = () => {
-		axios
-			.patch(`${process.env.REACT_APP_API_URL}api/post/edit-comment-post/${comment.id}`, {
-				withCredentials: true,
-				data: {
-					text: newText,
-				},
-			})
+		axios({
+			method: 'patch',
+			url: `${process.env.REACT_APP_API_URL}api/post/edit-comment-post/${comment.id}`,
+			withCredentials: true,
+			data: {
+				text: newText,
+			},
+		})
 			.then((res) => {
 				console.log(res);
-				// window.location.reload();
 			})
 			.catch((err) => {
 				console.log(err);
@@ -60,13 +58,6 @@ const Comment = (props) => {
 						title='Supprimer le commentaire'
 						onClick={deleteComment}
 					/>
-					<img
-						src={Edit}
-						className='edit'
-						alt='edit'
-						title='Modifier le commentaire'
-						// onClick={() => setToggle(!toggle)}
-					/>
 				</div>
 			);
 		} else {
@@ -74,20 +65,18 @@ const Comment = (props) => {
 		}
 	};
 
-	const handleChange = (e) => {
-		// let newValue = document.querySelector('.new__value').innerHTML;
-		// console.log(newValue);
-		// setNewText(newValue)
-	};
-
 	const displayText = () => {
 		if (comment.UserId === uid) {
 			return (
 				<>
-					<EditText className='new__value'
+					<input
+						type='text'
+						name='text'
+						id='text'
+						className='new__value'
+						onChange={(e) => setNewText(e.target.value)}
+						onBlur={editComment}
 						defaultValue={comment.text}
-						onChange={event => setNewText(event.target.value)}
-						onSave={editComment}
 					/>
 				</>
 			);
@@ -106,7 +95,7 @@ const Comment = (props) => {
 				{dayjs(comment.createdAt).locale('fr').fromNow()}
 				{editDisplay()}
 			</div>
-			{displayText()}
+			<div className='comment__data'>{displayText()}</div>
 		</div>
 	);
 };

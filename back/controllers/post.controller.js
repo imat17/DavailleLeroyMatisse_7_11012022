@@ -110,6 +110,66 @@ module.exports.deletePost = async (req, res) => {
 	}
 };
 
+// Comments
+module.exports.commentPost = async (req, res) => {
+	const decryptedUser = token.getUserId(req);
+	try {
+		const User = await UserModel.findOne({ where: { id: decryptedUser } });
+		if (User !== null) {
+			try {
+				const newComment = await CommentModel.create({
+					text: req.body.text,
+					PostId: req.params.id,
+					commenterPseudo: req.body.commenterPseudo,
+					UserId: req.body.UserId,
+				});
+				const comment = await newComment.save();
+				return res.status(201).json(comment);
+			} catch (err) {
+				res.status(500).send('Commentaire non publié');
+			}
+		} else {
+			res.status(400).send({ message: 'Utilisateur non authentifié' });
+		}
+	} catch {
+		res.status(500).send(err);
+	}
+};
+
+module.exports.editCommentPost = async (req, res) => {
+	const decryptedUser = token.getUserId(req);
+	let comment = await CommentModel.findOne({ where: { id: req.params.id } });
+	if (decryptedUser === comment.UserId) {
+		try {
+			await CommentModel.update({ text: req.body.text }, { where: { id: req.params.id } });
+			res.status(201).send('Le commentaire à bien été modifié');
+		} catch {
+			res.status(500).send('Erreur lors de la modification du commentaire');
+		}
+	} else {
+		res.status(400).json({ message: 'Utilisateur non authentifié' });
+	}
+};
+
+module.exports.deleteCommentPost = async (req, res) => {
+	const decryptedUser = token.getUserId(req);
+	let comment = await CommentModel.findOne({ where: { id: req.params.id } });
+	if (decryptedUser === comment.UserId) {
+		try {
+			await CommentModel.destroy({
+				where: { id: req.params.id },
+			});
+			res.status(200).json({ message: 'Le commentaire à bien été supprimé' });
+		} catch (err) {
+			return res
+				.status(500)
+				.json({ message: err + 'Erreur lors de la suppression du commentaire' });
+		}
+	} else {
+		res.status(400).json({ message: 'Utilisateur non authentifié' });
+	}
+};
+
 // Likes / Unlikes
 module.exports.likePost = async (req, res) => {
 	try {
@@ -131,41 +191,5 @@ module.exports.unlikePost = async (req, res) => {
 		res.status(201).send('Like annulé');
 	} catch {
 		res.status(500).send('Erreur lors de la suppression du like');
-	}
-};
-
-// Comments
-module.exports.commentPost = async (req, res) => {
-	try {
-		const newComment = await CommentModel.create({
-			text: req.body.text,
-			PostId: req.params.id,
-			commenterPseudo: req.body.commenterPseudo,
-			UserId: req.body.UserId,
-		});
-		const comment = await newComment.save();
-		return res.status(201).json(comment);
-	} catch (err) {
-		res.status(500).send('Commentaire non publié');
-	}
-};
-
-module.exports.editCommentPost = async (req, res) => {
-	try {
-		await CommentModel.update({ text: req.body.text }, { where: { id: req.params.id } });
-		res.status(201).send('Le commentaire à bien été modifié');
-	} catch {
-		res.status(500).send('Erreur lors de la modification du commentaire');
-	}
-};
-
-module.exports.deleteCommentPost = async (req, res) => {
-	try {
-		await CommentModel.destroy({
-			where: { id: req.params.id },
-		});
-		res.status(200).json({ message: 'Le commentaire à bien été supprimé' });
-	} catch (err) {
-		return res.status(500).json({ message: err + 'Erreur lors de la suppression du commentaire' });
 	}
 };

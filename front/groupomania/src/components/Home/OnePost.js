@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext } from 'react';
 import { UidContext } from '../AppContext';
 import axios from 'axios';
 import Trash from '../../media/icons/trash.png';

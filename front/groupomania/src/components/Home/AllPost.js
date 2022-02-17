@@ -1,11 +1,9 @@
-import React, { useState, useEffect, useContext } from 'react';
-import { UidContext } from '../AppContext';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import OnePost from './OnePost';
 
 const AllPost = () => {
 	const [posts, setPosts] = useState(null);
-	const uid = useContext(UidContext);
 	// console.log(posts);
 
 	useEffect(() => {
