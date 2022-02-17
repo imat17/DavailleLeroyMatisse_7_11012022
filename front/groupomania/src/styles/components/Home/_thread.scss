@@ -4,7 +4,7 @@
 	li {
 		margin: 2rem;
 		border-radius: $border-radius;
-		border: 2px solid $orange;
+		border: .5px solid $orange;
 		max-width: 900px;
 		min-height: 250px;
 		background-color: $blue-op;
@@ -44,6 +44,7 @@
 		display: flex;
 		justify-content: center;
 		flex-direction: column;
+		padding: 15px;
 		.info__text {
 			margin-left: 30px;
 		}

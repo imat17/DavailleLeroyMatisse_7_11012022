@@ -152,7 +152,7 @@ module.exports.commentPost = async (req, res) => {
 
 module.exports.editCommentPost = async (req, res) => {
 	try {
-		await CommentModel.update({ text: req.body.text }, { where: { PostId: req.params.id } });
+		await CommentModel.update({ text: req.body.text }, { where: { id: req.params.id } });
 		res.status(201).send('Le commentaire à bien été modifié');
 	} catch {
 		res.status(500).send('Erreur lors de la modification du commentaire');
@@ -162,7 +162,7 @@ module.exports.editCommentPost = async (req, res) => {
 module.exports.deleteCommentPost = async (req, res) => {
 	try {
 		await CommentModel.destroy({
-			where: { PostId: req.params.id },
+			where: { id: req.params.id },
 		});
 		res.status(200).json({ message: 'Le commentaire à bien été supprimé' });
 	} catch (err) {

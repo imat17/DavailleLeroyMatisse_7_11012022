@@ -1,13 +1,17 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import { UidContext } from '../AppContext';
 import axios from 'axios';
 import Trash from '../../media/icons/trash.png';
 import Comment from './Comment';
+import AddComment from './AddComment';
+import dayjs from 'dayjs';
+require("dayjs/locale/fr");
+const relativeTime = require("dayjs/plugin/relativeTime");
+dayjs.extend(relativeTime);
 
 const OnePost = (props) => {
 	const uid = useContext(UidContext);
-	// console.log(props);
-
+	
 	const deletePost = () => {
 		axios
 			.delete(`${process.env.REACT_APP_API_URL}api/post/${props.postInfo.id}`, {
@@ -34,6 +38,18 @@ const OnePost = (props) => {
 		}
 	};
 
+	const imgDisplay = () => {
+		if (props.postInfo.picture === '') {
+			return null
+		} else {
+			return (
+				<div className='pic__container'>
+					<img src={props.postInfo.picture} alt='profile pic' />
+				</div>
+			);
+		}
+	};
+
 	return (
 		<li>
 			<div className='about__post'>
@@ -42,21 +58,18 @@ const OnePost = (props) => {
 					<p className='user__id'>{props.postInfo.User.pseudo}</p>
 				</div>
 				<div className='timestamp__container'>
-					<p className='timestamp'>{props.postInfo.createdAt}</p>
+					<p className='timestamp'>{dayjs(props.postInfo.createdAt).locale('fr').fromNow()}</p>
 					{trashDisplay()}
 				</div>
 			</div>
 			<div className='content__container'>
 				<p className='info__text'>{props.postInfo.text}</p>
-				<div className='pic__container'>
-					<img src={props.postInfo.picture} alt='profile pic' />
-				</div>
+				{imgDisplay()}
 			</div>
-			<Comment
-				listComments={props.postInfo.Comments}
-				postId={props.postInfo.id}
-				key={props.postInfo.Comments.id}
-			/>
+			<AddComment postInfo={props.postInfo} />
+			{props.postInfo.Comments.map((comment) => {
+				return <Comment key={comment.id} comment={comment}/>;
+			})}
 		</li>
 	);
 };

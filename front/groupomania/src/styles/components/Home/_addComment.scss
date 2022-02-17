@@ -1,0 +1,25 @@
+.add__comment {
+    border: .5px solid $orange;
+	padding: 15px;
+	display: flex;
+	form {
+		width: 100%;
+		display: flex;
+	}
+	textarea {
+		resize: none;
+		border-radius: $border-radius;
+		height: 60px;
+		width: 90%;
+		padding: 4px;
+		font-size: 14px;
+	}
+	input {
+		@include btn-style;
+		background: $orange;
+		padding: 0;
+		margin-top: 10px;
+        max-width: 20%;
+        min-width: 8rem;
+	}
+}

@@ -1,6 +1,33 @@
+
 .comment__container {
-	background-color: $blue;
-	width: 500px;
-	height: 500px;
-    display: flex;
+	border-bottom: .5px solid $orange;
+	padding: 1rem;
+	width: 100%;
+	font-size: 14px;
+	border-radius: $border-radius;
+	.commenter__info {
+		display: flex;
+		align-items: center;
+		p {
+			padding-left: 15px;
+		}
+		img {
+			width: 4rem;
+			border-radius: 30px;
+		}
+	}
+	.trash__container {
+		display: flex;
+		flex-direction: column;
+		align-items: flex-end;
+		padding-top: 10px;
+		img {
+			cursor: pointer;
+			width: 1.5rem;
+			padding-top: 5px;
+		}
+	}
+	.comment__data {
+		margin-left: 30px;
+	}
 }
