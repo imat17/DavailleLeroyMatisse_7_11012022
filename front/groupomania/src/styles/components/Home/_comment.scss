@@ -1,9 +1,13 @@
 .comment__container {
-	border-bottom: 0.5px solid $orange;
+	border-bottom: 2px solid $white;
 	padding: 1rem;
 	width: 100%;
 	font-size: 14px;
 	border-radius: $border-radius;
+	.comment__info {
+		display: flex;
+		justify-content: space-between;
+	}
 	.new__value {
 		width: 100%;
 		font-size: 14px;
@@ -12,10 +16,9 @@
 		font-family: 'Raleway', sans-serif;
 		font-weight: bold;
 		text-align: top;
-		padding-top: 15px;
 		cursor: pointer;
 		&:focus {
-			border: 1px solid $orange;
+			border: .5px solid $white;
 			border-radius: $border-radius;
 		}
 	}
@@ -30,10 +33,9 @@
 			border-radius: 30px;
 		}
 	}
-	.timestamp__container {
-		
-	}
 	.trash__container {
+		display: flex;
+		justify-content: flex-end;
 		padding-top: 10px;
 		img {
 			cursor: pointer;
@@ -43,5 +45,8 @@
 	}
 	.comment__data {
 		margin-top: 10px;
+		.comment__text {
+			width: 100%;
+		}
 	}
 }

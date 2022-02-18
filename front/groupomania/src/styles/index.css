@@ -33,6 +33,7 @@ header .container__img {
   align-items: center;
 }
 header .container__img img:nth-child(1) {
+  cursor: pointer;
   width: 35rem;
   margin-left: -3.5rem;
 }
@@ -57,28 +58,26 @@ header .container__img img:nth-child(2) {
 header .disconnect {
   position: absolute;
   right: 50px;
-  top: 40px;
+  top: 45px;
   cursor: pointer;
 }
 header .disconnect img {
-  width: 3rem;
+  width: 2.5rem;
 }
 header .arrow {
   position: absolute;
   left: 50px;
-  top: 40px;
+  top: 45px;
   cursor: pointer;
 }
 header .arrow img {
-  width: 3rem;
+  width: 2.5rem;
 }
 header .profile__preview {
   position: absolute;
   background: #d86747;
   opacity: 0.7;
   border-radius: 6px;
-  width: 250px;
-  height: 80px;
   top: 23px;
   right: 150px;
 }
@@ -290,7 +289,8 @@ form .submit__btn:hover {
 }
 
 .add__comment {
-  border: 0.5px solid #d86747;
+  border-bottom: 2px solid #f0f2f5;
+  border-top: 2px solid #f0f2f5;
   padding: 15px;
   display: flex;
 }
@@ -328,11 +328,15 @@ form .submit__btn:hover {
 }
 
 .comment__container {
-  border-bottom: 0.5px solid #d86747;
+  border-bottom: 2px solid #f0f2f5;
   padding: 1rem;
   width: 100%;
   font-size: 14px;
   border-radius: 6px;
+}
+.comment__container .comment__info {
+  display: flex;
+  justify-content: space-between;
 }
 .comment__container .new__value {
   width: 100%;
@@ -342,11 +346,10 @@ form .submit__btn:hover {
   font-family: "Raleway", sans-serif;
   font-weight: bold;
   text-align: top;
-  padding-top: 15px;
   cursor: pointer;
 }
 .comment__container .new__value:focus {
-  border: 1px solid #d86747;
+  border: 0.5px solid #f0f2f5;
   border-radius: 6px;
 }
 .comment__container .commenter__info {
@@ -361,6 +364,8 @@ form .submit__btn:hover {
   border-radius: 30px;
 }
 .comment__container .trash__container {
+  display: flex;
+  justify-content: flex-end;
   padding-top: 10px;
 }
 .comment__container .trash__container img {
@@ -371,24 +376,28 @@ form .submit__btn:hover {
 .comment__container .comment__data {
   margin-top: 10px;
 }
+.comment__container .comment__data .comment__text {
+  width: 100%;
+}
 
 .post__container {
   max-width: 900px;
   margin: 50px auto;
 }
 .post__container li {
-  margin: 2rem;
+  margin: 2rem 2rem 5rem 2rem;
   border-radius: 6px;
-  border: 0.5px solid #d86747;
   max-width: 900px;
   min-height: 250px;
   background-color: rgba(34, 68, 79, 0.9);
   color: white;
   font-weight: bold;
+  box-shadow: 0 0 16px #555;
 }
 .post__container .about__post {
   display: flex;
   align-items: center;
+  flex-wrap: wrap;
   justify-content: space-between;
   padding: 15px;
 }
@@ -422,7 +431,7 @@ form .submit__btn:hover {
   padding: 15px;
 }
 .post__container .content__container .info__text {
-  margin-left: 30px;
+  margin-left: 15px;
 }
 .post__container .content__container .pic__container {
   display: flex;

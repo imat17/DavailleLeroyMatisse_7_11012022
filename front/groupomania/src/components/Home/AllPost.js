@@ -4,7 +4,6 @@ import OnePost from './OnePost';
 
 const AllPost = () => {
 	const [posts, setPosts] = useState(null);
-	// console.log(posts);
 
 	useEffect(() => {
 		axios

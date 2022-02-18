@@ -1,7 +1,6 @@
 import React, { useState, useContext } from 'react';
-import { UidContext } from '../AppContext';
-import Trash from '../../media/icons/trash.png';
-import Edit from '../../media/icons/edit.png';
+import { adminContext, UidContext } from '../AppContext';
+import Trash from '../../media/icons/trash-bin.png';
 import axios from 'axios';
 import dayjs from 'dayjs';
 require('dayjs/locale/fr');
@@ -10,11 +9,10 @@ dayjs.extend(relativeTime);
 
 const Comment = (props) => {
 	const comment = props.comment;
-	const [newText, setNewText] = useState('');
+	const [newText, setNewText] = useState(comment.text);
 	const uid = useContext(UidContext);
-	// console.log(props)
-	console.log(newText);
-
+	const admin = useContext(adminContext);
+	
 	const deleteComment = () => {
 		axios({
 			method: 'patch',
@@ -48,7 +46,7 @@ const Comment = (props) => {
 	};
 
 	const editDisplay = () => {
-		if (uid === comment.UserId) {
+		if (uid === comment.UserId || admin === true) {
 			return (
 				<div className='trash__container'>
 					<img
@@ -65,6 +63,15 @@ const Comment = (props) => {
 		}
 	};
 
+	const handleChange = (e) => {
+		if (newText !== null || '') {
+			setNewText(e.target.value);
+			return;
+		} else {
+			return;
+		}
+	};
+
 	const displayText = () => {
 		if (comment.UserId === uid) {
 			return (
@@ -74,7 +81,7 @@ const Comment = (props) => {
 						name='text'
 						id='text'
 						className='new__value'
-						onChange={(e) => setNewText(e.target.value)}
+						onChange={handleChange}
 						onBlur={editComment}
 						defaultValue={comment.text}
 					/>
@@ -87,13 +94,15 @@ const Comment = (props) => {
 
 	return (
 		<div className='comment__container'>
-			<div className='commenter__info'>
-				<img src={comment.User.picture} className='profile__pic' alt='profile pic' />
-				<p className='commenter__pseudo'>{comment.commenterPseudo}</p>
-			</div>
-			<div className='timestamp__container'>
-				{dayjs(comment.createdAt).locale('fr').fromNow()}
-				{editDisplay()}
+			<div className='comment__info'>
+				<div className='commenter__info'>
+					<img src={comment.User.picture} className='profile__pic' alt='profile pic' />
+					<p className='commenter__pseudo'>{comment.commenterPseudo}</p>
+				</div>
+				<div className='timestamp__container'>
+					{dayjs(comment.createdAt).locale('fr').fromNow()}
+					{editDisplay()}
+				</div>
 			</div>
 			<div className='comment__data'>{displayText()}</div>
 		</div>

@@ -2,18 +2,19 @@
 	max-width: 900px;
 	margin: 50px auto;
 	li {
-		margin: 2rem;
+		margin: 2rem 2rem 5rem 2rem;
 		border-radius: $border-radius;
-		border: .5px solid $orange;
 		max-width: 900px;
 		min-height: 250px;
 		background-color: $blue-op;
 		color: white;
 		font-weight: bold;
+		box-shadow: 0 0 16px #555;
 	}
 	.about__post {
 		display: flex;
 		align-items: center;
+		flex-wrap: wrap;
 		justify-content: space-between;
 		padding: 15px;
 		img {
@@ -46,7 +47,7 @@
 		flex-direction: column;
 		padding: 15px;
 		.info__text {
-			margin-left: 30px;
+			margin-left: 15px;
 		}
 		.pic__container {
 			display: flex;

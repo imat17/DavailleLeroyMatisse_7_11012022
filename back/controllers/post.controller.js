@@ -8,7 +8,16 @@ const { post } = require('../routes/post.routes');
 module.exports.readPost = async (req, res) => {
 	try {
 		const allPosts = await PostModel.findAll({
-			include: [{ model: UserModel }, { model: CommentModel, include: UserModel }],
+			include: [
+				{ model: UserModel, attributes: { exclude: ['password', 'isAdmin'] } },
+				{
+					model: CommentModel,
+					attributes: { exclude: ['password', 'isAdmin'] },
+					include: UserModel,
+					attributes: { exclude: ['password', 'isAdmin'] },
+				},
+			],
+			order: [['createdAt', 'DESC']],
 		});
 		res.status(200).send(allPosts);
 	} catch (err) {
@@ -88,8 +97,9 @@ module.exports.updatePost = async (req, res) => {
 
 module.exports.deletePost = async (req, res) => {
 	const decryptedUser = token.getUserId(req);
+	const isAdmin = await UserModel.findOne({ where: { id: decryptedUser } });
 	let deletePost = await PostModel.findOne({ where: { id: req.params.id } });
-	if (decryptedUser === deletePost.UserId) {
+	if (decryptedUser === deletePost.UserId || isAdmin.isAdmin === true) {
 		try {
 			if (PostModel.picture) {
 				const fileName = PostModel.picture.split('/posts')[1];
@@ -153,8 +163,9 @@ module.exports.editCommentPost = async (req, res) => {
 
 module.exports.deleteCommentPost = async (req, res) => {
 	const decryptedUser = token.getUserId(req);
+	const isAdmin = await UserModel.findOne({ where: { id: decryptedUser } });
 	let comment = await CommentModel.findOne({ where: { id: req.params.id } });
-	if (decryptedUser === comment.UserId) {
+	if (decryptedUser === comment.UserId || isAdmin.isAdmin === true) {
 		try {
 			await CommentModel.destroy({
 				where: { id: req.params.id },

@@ -6,7 +6,7 @@ const Arrow = () => {
 	return (
 		<NavLink to='/home'>
 			<div className='arrow'>
-				<img src={leftArrow} alt='back to arrow' />
+				<img src={leftArrow} alt='back to arrow' title='retour' />
 			</div>
 		</NavLink>
 	);

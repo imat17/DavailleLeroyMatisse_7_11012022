@@ -12,7 +12,7 @@ module.exports.getAllUsers = async (req, res) => {
 module.exports.getOneUser = async (req, res) => {
 	const user = await UserModel.findOne({
 		where: { id: req.params.id },
-		attributes: { exclude: ['password', 'isAdmin'] },
+		attributes: { exclude: ['password'] },
 	});
 	res.status(200).json(user);
 };

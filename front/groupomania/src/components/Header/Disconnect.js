@@ -20,7 +20,7 @@ const Disconnect = () => {
 	return (
 		<NavLink to='/'>
 			<div className='disconnect' onClick={disconnectUser}>
-				<img src={LogoutImg} alt='deconnexion' />
+				<img src={LogoutImg} alt='deconnexion' title='Se déconnecter' />
 			</div>
 		</NavLink>
 	);
