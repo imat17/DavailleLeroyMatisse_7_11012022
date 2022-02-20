@@ -1,9 +1,6 @@
 const { UserModel, PostModel, CommentModel, LikeModel } = require('../models/Index');
 const fs = require('fs');
-const { promisify } = require('util');
-const pipeline = promisify(require('stream').pipeline);
 const token = require('../middlewares/auth.middleware');
-const { post } = require('../routes/post.routes');
 
 module.exports.readPost = async (req, res) => {
 	try {
@@ -26,45 +23,20 @@ module.exports.readPost = async (req, res) => {
 };
 
 module.exports.createPost = async (req, res) => {
-	let fileName;
 	const decryptedUser = token.getUserId(req);
 	try {
 		const User = await UserModel.findOne({ where: { id: decryptedUser } });
 		if (User !== null) {
-			if (req.file != null) {
-				try {
-					if (
-						req.file.detectedMimeType != 'image/jpg' &&
-						req.file.detectedMimeType != 'image/png' &&
-						req.file.detectedMimeType != 'image/jpeg' &&
-						req.file.detectedMimeType != 'image/gif'
-					)
-						throw Error('image invalide');
-					if (req.file.size > 500000) throw Error('Image trop volumineuse');
-				} catch (err) {
-					return res.status(500).send(err);
-				}
-				if (
-					req.file.detectedMimeType == 'image/jpg' ||
-					req.file.detectedMimeType == 'image/png' ||
-					req.file.detectedMimeType == 'image/jpeg'
-				) {
-					fileName = req.body.UserId + Date.now() + '.jpg';
-				} else if (req.file.detectedMimeType == 'image/gif') {
-					fileName = req.body.UserId + Date.now() + '.gif';
-				}
-				// Stockage des images des posts dans le dossier front 'post'
-				await pipeline(
-					req.file.stream,
-					fs.createWriteStream(
-						`${__dirname}/../../front/groupomania/public/uploads/posts/${fileName}`
-					)
-				);
+			// const filename = req.file.path.split('public')[1];
+			if (req.file) {
+				imageUrl = `${req.protocol}://${req.get('host')}/uploads/${req.file.filename}`;
+			} else {
+				imageUrl = '';
 			}
 			const newPost = PostModel.create({
 				UserId: User.id,
 				text: req.body.text,
-				picture: req.file != null ? './uploads/posts/' + fileName : '',
+				picture: imageUrl,
 			});
 			try {
 				const post = await newPost.save();
@@ -85,7 +57,26 @@ module.exports.updatePost = async (req, res) => {
 	let newPost = await PostModel.findOne({ where: { id: req.params.id } });
 	if (decryptedUser === newPost.UserId) {
 		try {
-			await PostModel.update({ text: req.body.text }, { where: { id: req.params.id } });
+			if (req.file) {
+				newPicture = `${req.protocol}://${req.get('host')}/uploads/${req.file.filename}`;
+			}
+			if (PostModel.picture) {
+				const filename = PostModel.picture.split('/uploads')[1];
+				fs.unlink(`uploads/${filename}`, (err) => {
+					if (err) console.log(err);
+					else {
+						res.status(200).send("L'image à bien été supprimée");
+					}
+				});
+			}
+			await PostModel.update(
+				{
+					text: req.body.text,
+					picture: newPicture,
+					UserId: req.body.UserId,
+				},
+				{ where: { id: req.params.id } }
+			);
 			res.status(201).send('Le post à bien été modifié');
 		} catch (err) {
 			res.status(500).send('Erreur lors de la modification du post');
@@ -96,14 +87,14 @@ module.exports.updatePost = async (req, res) => {
 };
 
 module.exports.deletePost = async (req, res) => {
-	const decryptedUser = token.getUserId(req);
-	const isAdmin = await UserModel.findOne({ where: { id: decryptedUser } });
-	let deletePost = await PostModel.findOne({ where: { id: req.params.id } });
-	if (decryptedUser === deletePost.UserId || isAdmin.isAdmin === true) {
-		try {
+	try {
+		const decryptedUser = token.getUserId(req);
+		const isAdmin = await UserModel.findOne({ where: { id: decryptedUser } });
+		let deletePost = await PostModel.findOne({ where: { id: req.params.id } });
+		if (decryptedUser === deletePost.UserId || isAdmin.isAdmin === true) {
 			if (PostModel.picture) {
-				const fileName = PostModel.picture.split('/posts')[1];
-				fs.unlink(`posts/${fileName}`, () => {
+				const filename = PostModel.picture.split('/uploads')[1];
+				fs.unlink(`uploads/${filename}`, () => {
 					PostModel.destroy({
 						where: { id: req.params.id },
 					});
@@ -112,11 +103,11 @@ module.exports.deletePost = async (req, res) => {
 				PostModel.destroy({ where: { id: req.params.id } });
 				res.status(200).json({ message: 'Post supprimé' });
 			}
-		} catch (err) {
-			return res.status(500).send({ err: 'Erreur serveur' });
+		} else {
+			res.status(400).json({ message: 'Utilisateur non authentifié' });
 		}
-	} else {
-		res.status(400).json({ message: 'Utilisateur non authentifié' });
+	} catch (err) {
+		res.status(500).send('Erreur lors de la modification du post');
 	}
 };
 

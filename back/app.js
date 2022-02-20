@@ -3,11 +3,11 @@ const app = express();
 const cookieParser = require('cookie-parser');
 const userRoutes = require('./routes/user.routes');
 const postRoutes = require('./routes/post.routes');
-// const path = require('path');
 const { connect } = require('./config/connect');
 const { loadModel } = require('./models/Index');
 const { checkUser, requireAuth } = require('./middlewares/auth.middleware');
 const cors = require('cors');
+const path = require('path');
 
 // Connection à la BDD
 connect();
@@ -24,6 +24,9 @@ app.use((req, res, next) => {
 	res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, PATCH, OPTIONS');
 	next();
 });
+
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
+app.use('/profil', express.static(path.join(__dirname, 'profil')));
 
 app.use(cors({ credentials: true, origin: 'http://localhost:3000' }));
 app.use(express.json());

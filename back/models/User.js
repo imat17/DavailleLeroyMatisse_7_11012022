@@ -36,7 +36,7 @@ const User = bdd.define('User', {
 	},
 	picture: {
 		type: DataTypes.STRING,
-		defaultValue: './uploads/profil/random-user.png',
+		defaultValue: 'http://localhost:8000/profil/random-user.png',
 	},
 	isAdmin: {
 		type: DataTypes.BOOLEAN,

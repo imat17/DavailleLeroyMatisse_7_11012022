@@ -1,36 +1,35 @@
 const UserModel = require('../models/User');
 const fs = require('fs');
-const { promisify } = require('util');
-const pipeline = promisify(require('stream').pipeline);
+const token = require('../middlewares/auth.middleware');
 
 module.exports.uploadProfil = async (req, res) => {
+	const decryptedUser = token.getUserId(req);
 	try {
-		if (
-			req.file.detectedMimeType != 'image/jpg' &&
-			req.file.detectedMimeType != 'image/png' &&
-			req.file.detectedMimeType != 'image/jpeg'
-		)
-			throw Error('invalid file');
-
-		if (req.file.size > 500000) throw Error('max size');
+		const User = await UserModel.findOne({ where: { id: decryptedUser } });
+		if (User !== null) {
+			if (req.file) {
+				newProfilePicture = `${req.protocol}://${req.get('host')}/profil/${req.file.filename}`;
+			}
+			if (UserModel.picture) {
+				const filename = UserModel.picture.split('/profil')[1];
+				fs.unlink(`profil/${filename}`, (err) => {
+					if (err) console.log(err);
+					else {
+						res.status(200).send("L'image à bien été supprimée");
+					}
+				});
+			}
+			await UserModel.update(
+				{
+					picture: newProfilePicture,
+				},
+				{ where: { id: req.body.id } }
+			);
+			res.status(201).send('Le profil à bien été modifié');
+		} else {
+			res.status(400).json({ message: 'Utilisateur non authentifié' });
+		}
 	} catch (err) {
-		// const errors = uploadErrors(err);
-		return res.status(201).json('Crée');
-	}
-	let fileName = req.body.pseudo + '.jpg';
-
-	await pipeline(
-		req.file.stream,
-		fs.createWriteStream(`${__dirname}/../../front/groupomania/public/uploads/profil/${fileName}`)
-	);
-
-	try {
-		await UserModel.update(
-			{ picture: './uploads/profil/' + fileName },
-			{ where: { id: req.body.id } },
-			res.status(201).json('Votre profil à bien été mis à jour')
-		);
-	} catch (err) {
-		return res.status(500).send('Erreur lors de la modification du profil');
+		console.log(err);
 	}
 };

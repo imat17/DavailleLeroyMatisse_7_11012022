@@ -389,10 +389,24 @@ form .submit__btn:hover {
   border-radius: 6px;
   max-width: 900px;
   min-height: 250px;
-  background-color: rgba(34, 68, 79, 0.9);
+  background-color: #22444f;
   color: white;
   font-weight: bold;
-  box-shadow: 0 0 16px #555;
+  box-shadow: 0 0 13px #555;
+}
+.post__container .new__post {
+  width: 100%;
+  background: transparent;
+  color: #f0f2f5;
+  font-family: "Raleway", sans-serif;
+  font-weight: bold;
+  font-size: 16px;
+  margin-left: 15px;
+  cursor: pointer;
+}
+.post__container .new__post:focus {
+  border: 0.5px solid #f0f2f5;
+  border-radius: 6px;
 }
 .post__container .about__post {
   display: flex;
@@ -410,10 +424,13 @@ form .submit__btn:hover {
 }
 .post__container .about__post .trash__container {
   display: flex;
+  flex-direction: column;
   justify-content: flex-end;
+  align-items: flex-end;
   padding-top: 10px;
 }
-.post__container .about__post .trash__container .trash {
+.post__container .about__post .trash__container img {
+  margin-bottom: 5px;
   width: 1.5rem;
   cursor: pointer;
 }
@@ -429,6 +446,10 @@ form .submit__btn:hover {
   justify-content: center;
   flex-direction: column;
   padding: 15px;
+}
+.post__container .content__container button {
+  width: 60px;
+  margin-top: 50px;
 }
 .post__container .content__container .info__text {
   margin-left: 15px;

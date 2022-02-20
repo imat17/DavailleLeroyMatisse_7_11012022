@@ -9,7 +9,21 @@
 		background-color: $blue-op;
 		color: white;
 		font-weight: bold;
-		box-shadow: 0 0 16px #555;
+		box-shadow: 0 0 13px #555;
+	}
+	.new__post {
+		width: 100%;
+		background: transparent;
+		color: $white;
+		font-family: 'Raleway', sans-serif;
+		font-weight: bold;
+		font-size: 16px;
+		margin-left: 15px;
+		cursor: pointer;
+		&:focus {
+			border: .5px solid $white;
+			border-radius: $border-radius;
+		}
 	}
 	.about__post {
 		display: flex;
@@ -26,9 +40,12 @@
 		}
 		.trash__container {
 			display: flex;
+			flex-direction: column;
 			justify-content: flex-end;
+			align-items: flex-end;
 			padding-top: 10px;
-			.trash {
+			img {
+				margin-bottom: 5px;
 				width: 1.5rem;
 				cursor: pointer;
 			}
@@ -46,6 +63,10 @@
 		justify-content: center;
 		flex-direction: column;
 		padding: 15px;
+		button {
+			width: 60px;
+			margin-top: 50px;
+		}
 		.info__text {
 			margin-left: 15px;
 		}

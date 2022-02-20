@@ -11,7 +11,7 @@ const ProfileForm = () => {
 	const uid = useContext(UidContext);
 
 	console.log(file);
-	
+
 	useEffect(() => {
 		axios({
 			method: 'get',
@@ -74,9 +74,8 @@ const ProfileForm = () => {
 
 	const editProfilePicture = () => {
 		const formPicture = new FormData();
-		formPicture.append('file', file);
+		formPicture.append('picture', file);
 		formPicture.append('id', uid);
-		formPicture.append('pseudo', pseudo);
 		axios({
 			method: 'post',
 			url: `${process.env.REACT_APP_API_URL}api/user/upload`,
@@ -98,7 +97,7 @@ const ProfileForm = () => {
 
 	return (
 		<>
-			<form action='' onSubmit={editData} id='profile__form'>
+			<form action='' encType='multipart/form-data' onSubmit={editData} id='profile__form'>
 				<div className='profile__pic'>
 					<img src={file} alt='Profilepicture' />
 					<input type='file' onChange={(e) => setFile(e.target.files[0])} />

@@ -13,12 +13,12 @@ const Header = (props) => {
 	return (
 		<header>
 			{arrowDisplay && <Arrow />}
-			<NavLink to='/home'>
-				<div className='container__img'>
-					<img src={Logo} alt='logo groupomania' />
-					<img src={LogoMobile} alt='logo groupomania' />
-				</div>
-			</NavLink>
+
+			<div className='container__img'>
+				<img src={Logo} alt='logo groupomania' />
+				<img src={LogoMobile} alt='logo groupomania' />
+			</div>
+
 			{profilePreviewDisplay && <ProfilePreview />}
 			{disconnectDisplay && <Disconnect />}
 		</header>
