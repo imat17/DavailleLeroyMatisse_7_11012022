@@ -2,6 +2,7 @@ import React, { useState, useContext } from 'react';
 import axios from 'axios';
 import { UidContext } from '../AppContext';
 
+
 const PostBar = () => {
 	const [text, setText] = useState('');
 	const [file, setFile] = useState(null);
@@ -38,7 +39,7 @@ const PostBar = () => {
 				<img src='' alt='' />
 			</div>
 			<form
-				encType='multipart/form-data'
+				encType=''
 				onSubmit={handlePost}
 				id='post__form'
 			>

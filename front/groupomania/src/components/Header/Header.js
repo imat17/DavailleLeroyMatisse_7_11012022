@@ -1,5 +1,4 @@
 import React from 'react';
-import { NavLink } from 'react-router-dom';
 import Logo from '../../media/icons/icon-left-font-min-nobg.png';
 import LogoMobile from '../../media/icons/icon.png';
 import ProfilePreview from './ProfilePreview';

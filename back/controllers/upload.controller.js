@@ -8,11 +8,11 @@ module.exports.uploadProfil = async (req, res) => {
 		const User = await UserModel.findOne({ where: { id: decryptedUser } });
 		if (User !== null) {
 			if (req.file) {
-				newProfilePicture = `${req.protocol}://${req.get('host')}/profil/${req.file.filename}`;
+				newProfilePicture = `${req.protocol}://${req.get('host')}/uploads/${req.file.filename}`;
 			}
 			if (UserModel.picture) {
-				const filename = UserModel.picture.split('/profil')[1];
-				fs.unlink(`profil/${filename}`, (err) => {
+				const filename = UserModel.picture.split('/uploads')[1];
+				fs.unlink(`uploads/${filename}`, (err) => {
 					if (err) console.log(err);
 					else {
 						res.status(200).send("L'image à bien été supprimée");

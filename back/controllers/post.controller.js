@@ -27,7 +27,6 @@ module.exports.createPost = async (req, res) => {
 	try {
 		const User = await UserModel.findOne({ where: { id: decryptedUser } });
 		if (User !== null) {
-			// const filename = req.file.path.split('public')[1];
 			if (req.file) {
 				imageUrl = `${req.protocol}://${req.get('host')}/uploads/${req.file.filename}`;
 			} else {
@@ -69,9 +68,9 @@ module.exports.updatePost = async (req, res) => {
 					}
 				});
 			}
-			await PostModel.update(
+			PostModel.update(
 				{
-					text: req.body.text,
+					text: newText,
 					picture: newPicture,
 					UserId: req.body.UserId,
 				},
@@ -85,6 +84,41 @@ module.exports.updatePost = async (req, res) => {
 		res.status(400).json({ message: 'Utilisateur non authentifié' });
 	}
 };
+
+// module.exports.updatePost = async (req, res) => {
+// 	try {
+// 		let newPicture;
+// 		const decryptedUser = token.getUserId(req);
+// 		let newPost = await PostModel.findOne({ where: { id: req.params.id } });
+// 		if (decryptedUser === newPost.UserId) {
+// 			if (req.file) {
+// 				newPicture = `${req.protocol}://${req.get('host')}/uploads/${req.file.filename}`;
+// 				if (PostModel.picture) {
+// 					const filename = PostModel.split('/upload')[1];
+// 					fs.unlink(`uploads/${filename}`, (err) => {
+// 						if (err) console.log(err);
+// 						else {
+// 							console.log('Image supprimée');
+// 						}
+// 					});
+// 				}
+// 			}
+// 			if (req.body.text) {
+// 				PostModel.text = req.body.text;
+// 			}
+// 			PostModel.UserId = req.body.UserId;
+// 			PostModel.picture = newPicture;
+// 			const newPost = await PostModel.save({
+// 				fields: ['text', 'picture'],
+// 			});
+// 			res.status(200).json({ newPost: newPost, messageRetour: 'post modifié' });
+// 		} else {
+// 			res.status(400).json({ message: "Vous n'avez pas les droits requis" });
+// 		}
+// 	} catch (err) {
+// 		return res.status(500).send({ error: 'Erreur serveur' });
+// 	}
+// };
 
 module.exports.deletePost = async (req, res) => {
 	try {

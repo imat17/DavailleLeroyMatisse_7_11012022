@@ -10,8 +10,6 @@ const ProfileForm = () => {
 
 	const uid = useContext(UidContext);
 
-	console.log(file);
-
 	useEffect(() => {
 		axios({
 			method: 'get',

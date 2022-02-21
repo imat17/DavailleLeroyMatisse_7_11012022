@@ -37,7 +37,7 @@ header .container__img img:nth-child(1) {
   width: 35rem;
   margin-left: -3.5rem;
 }
-@media screen and (max-width: 700px) {
+@media screen and (max-width: 750px) {
   header .container__img img:nth-child(1) {
     display: none;
   }
@@ -45,12 +45,12 @@ header .container__img img:nth-child(1) {
 header .container__img img:nth-child(2) {
   width: 8rem;
 }
-@media screen and (max-width: 700px) {
+@media screen and (max-width: 750px) {
   header .container__img img:nth-child(2) {
     display: visible;
   }
 }
-@media screen and (min-width: 700px) {
+@media screen and (min-width: 750px) {
   header .container__img img:nth-child(2) {
     display: none;
   }
@@ -60,6 +60,11 @@ header .disconnect {
   right: 50px;
   top: 45px;
   cursor: pointer;
+}
+@media screen and (max-width: 415px) {
+  header .disconnect {
+    top: 20px;
+  }
 }
 header .disconnect img {
   width: 2.5rem;
@@ -75,27 +80,18 @@ header .arrow img {
 }
 header .profile__preview {
   position: absolute;
-  background: #d86747;
-  opacity: 0.7;
-  border-radius: 6px;
-  top: 23px;
-  right: 150px;
+  right: 100px;
+  top: 38px;
+  cursor: pointer;
 }
-header .profile__preview .preview__img {
-  width: 30%;
+@media screen and (max-width: 415px) {
+  header .profile__preview {
+    top: 63px;
+    right: 42px;
+  }
 }
-header .profile__preview .preview__img img {
-  width: 100%;
-}
-header .profile__preview .preview__content {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 70%;
-}
-header .profile__preview .preview__content__link {
-  width: 100%;
-  text-align: end;
+header .profile__preview img {
+  width: 3.5rem;
 }
 
 .auth__form {

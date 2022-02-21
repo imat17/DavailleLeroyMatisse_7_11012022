@@ -16,9 +16,8 @@ const OnePost = (props) => {
 	const [toggle, setToggle] = useState(false);
 	const [newPost, setNewPost] = useState(props.postInfo.text);
 	const [newFile, setNewFile] = useState(props.postInfo.picture);
-	console.log(newPost);
-	console.log(newFile);
-	// console.log(props);
+	// console.log(newPost);
+	// console.log(newFile);
 
 	const deletePost = () => {
 		axios

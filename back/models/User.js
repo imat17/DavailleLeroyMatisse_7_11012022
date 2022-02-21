@@ -1,6 +1,6 @@
 const { bdd } = require('../config/connect');
 const { DataTypes } = require('sequelize');
-
+// Minimum 8 characters, at least one uppercase letter, one lowercase letter and one number
 const User = bdd.define('User', {
 	pseudo: {
 		type: DataTypes.STRING,
@@ -27,16 +27,10 @@ const User = bdd.define('User', {
 	password: {
 		type: DataTypes.STRING,
 		allowNull: false,
-		validate: {
-			min: {
-				args: [6],
-				msg: 'Mot de passe invalide (minimum 6 caractères)',
-			},
-		},
 	},
 	picture: {
 		type: DataTypes.STRING,
-		defaultValue: 'http://localhost:8000/profil/random-user.png',
+		defaultValue: 'http://localhost:8000/uploads/random-user.png',
 	},
 	isAdmin: {
 		type: DataTypes.BOOLEAN,

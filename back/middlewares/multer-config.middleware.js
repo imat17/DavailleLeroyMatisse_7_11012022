@@ -30,27 +30,27 @@ module.exports = upload;
 
 // Profile
 
-const storageProfile = multer.diskStorage({
-	destination: (req, file, callback) => {
-		callback(null, 'profil');
-	},
-	filename: (req, file, callback) => {
-		callback(null, Date.now() + path.extname(file.originalname));
-	},
-});
+// const storageProfile = multer.diskStorage({
+// 	destination: (req, file, callback) => {
+// 		callback(null, 'profil');
+// 	},
+// 	filename: (req, file, callback) => {
+// 		callback(null, Date.now() + path.extname(file.originalname));
+// 	},
+// });
 
-const uploadProfile = multer({
-	storage: storageProfile,
-	fileFilter: (req, file, callback) => {
-		const fileTypes = /jpeg|jpg|png/;
-		const mimType = fileTypes.test(file.mimetype);
-		const extname = fileTypes.test(path.extname(file.originalname));
+// const uploadProfile = multer({
+// 	storage: storageProfile,
+// 	fileFilter: (req, file, callback) => {
+// 		const fileTypes = /jpeg|jpg|png/;
+// 		const mimType = fileTypes.test(file.mimetype);
+// 		const extname = fileTypes.test(path.extname(file.originalname));
 
-		if (mimType && extname) {
-			return callback(null, true);
-		}
-		callback('Format invalide (autorisé : jpg/jpeg/png');
-	},
-}).single('picture');
+// 		if (mimType && extname) {
+// 			return callback(null, true);
+// 		}
+// 		callback('Format invalide (autorisé : jpg/jpeg/png');
+// 	},
+// }).single('profilePicture');
 
-module.exports = uploadProfile;
+// module.exports = uploadProfile;

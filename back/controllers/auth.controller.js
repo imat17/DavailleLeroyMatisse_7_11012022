@@ -12,14 +12,13 @@ const createToken = (id) => {
 };
 
 module.exports.signUp = async (req, res) => {
+	const { pseudo, email, password } = req.body;
 	try {
-		const { pseudo, email, password } = req.body;
 		const hash = await bcrypt.hash(password, 10);
 		const user = await UserModel.create({ pseudo, email, password: hash });
 		res.status(201).json({ user: user.id });
 	} catch (err) {
-		const errors = signUpErrors(err);
-		res.status(400).send({ errors });
+		res.status(200).json({ message: `Ce pseudo ou email existe déjà` });
 	}
 };
 
@@ -34,10 +33,10 @@ module.exports.signIn = async (req, res) => {
 				res.cookie('jwt', token, { httpOnly: true, secure: true, maxAge });
 				res.status(200).json({ user: user.id });
 			} else {
-				res.status(401).json({ message: 'Mot de passe incorrect' });
+				res.status(200).json({ message: 'Mot de passe incorrect' });
 			}
 		} else {
-			res.status(401).json({ message: `Email introuvable` });
+			res.status(200).json({ message: `Email introuvable` });
 		}
 	} catch (err) {
 		res.status(500);

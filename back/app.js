@@ -26,7 +26,7 @@ app.use((req, res, next) => {
 });
 
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
-app.use('/profil', express.static(path.join(__dirname, 'profil')));
+// app.use('/profil', express.static(path.join(__dirname, 'profil')));
 
 app.use(cors({ credentials: true, origin: 'http://localhost:3000' }));
 app.use(express.json());
