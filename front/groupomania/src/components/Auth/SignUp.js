@@ -7,9 +7,6 @@ const SignUp = () => {
 	const [formErrors, setFormErrors] = useState({});
 	const [isSubmit, setIsSubmit] = useState(false);
 
-	const emailError = document.querySelector('.email__error');
-	const pseudoError = document.querySelector('.pseudo__error');
-
 	const handleChange = (e) => {
 		const { name, value } = e.target;
 		setFormValues({ ...formValues, [name]: value });

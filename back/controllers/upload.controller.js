@@ -7,25 +7,27 @@ module.exports.uploadProfil = async (req, res) => {
 	try {
 		const User = await UserModel.findOne({ where: { id: decryptedUser } });
 		if (User !== null) {
-			if (req.file) {
-				newProfilePicture = `${req.protocol}://${req.get('host')}/uploads/${req.file.filename}`;
-			}
-			if (UserModel.picture) {
-				const filename = UserModel.picture.split('/uploads')[1];
-				fs.unlink(`uploads/${filename}`, (err) => {
-					if (err) console.log(err);
-					else {
-						res.status(200).send("L'image à bien été supprimée");
-					}
-				});
-			}
-			await UserModel.update(
-				{
-					picture: newProfilePicture,
-				},
-				{ where: { id: req.body.id } }
-			);
-			res.status(201).send('Le profil à bien été modifié');
+			UserModel.findOne({
+				where: { id: decryptedUser },
+			}).then((user) => {
+				if (req.file) {
+					newProfilePicture = `${req.protocol}://${req.get('host')}/uploads/${req.file.filename}`;
+				}
+				if (user.picture && req.file) {
+					const filename = user.picture.split('/uploads/')[1];
+					fs.unlink(`uploads/${filename}`, (err) => {
+						if (err) console.log(err);
+					});
+				}
+				UserModel.update(
+					{
+						picture: newProfilePicture,
+					},
+					{ where: { id: req.body.id } }
+				)
+					.then(() => res.status(200).json({ message: 'Utilisateur modifié', picture: newProfilePicture}))
+					.catch(() => res.status(500).json({ error: 'Erreur serveur' }));
+			});
 		} else {
 			res.status(400).json({ message: 'Utilisateur non authentifié' });
 		}

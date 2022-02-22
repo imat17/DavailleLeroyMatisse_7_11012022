@@ -12,7 +12,7 @@ const Comment = (props) => {
 	const [newText, setNewText] = useState(comment.text);
 	const uid = useContext(UidContext);
 	const admin = useContext(adminContext);
-	
+
 	const deleteComment = () => {
 		axios({
 			method: 'patch',

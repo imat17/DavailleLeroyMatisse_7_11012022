@@ -23,7 +23,7 @@ input, input:focus {
 
 header {
   width: 100%;
-  background: #22444f;
+  background: #091f43;
   position: relative;
   min-height: 128px;
 }
@@ -113,7 +113,7 @@ header .profile__preview img {
   display: flex;
   justify-content: center;
   align-items: center;
-  background: #22444f;
+  background: #091f43;
   border-radius: 2rem;
   padding: 0.9rem;
   width: 12.5rem;
@@ -148,8 +148,11 @@ form input {
   border-radius: 6px;
   font-weight: bold;
 }
+form div {
+  margin-top: 5px;
+}
 form .submit__btn {
-  background: #22444f;
+  background: #091f43;
   border-radius: 2rem;
   padding: 0.9rem;
   width: 12.5rem;
@@ -196,7 +199,7 @@ form .submit__btn:hover {
 }
 .profile__pic img:nth-child(1) {
   max-width: 100%;
-  border-radius: 20%;
+  border-radius: 50%;
 }
 .profile__pic img:nth-child(2) {
   cursor: pointer;
@@ -217,7 +220,7 @@ form .submit__btn:hover {
 .profile__input input {
   margin: 1rem;
   padding: 0 !important;
-  background: #22444f;
+  background: #091f43;
   border-radius: 2rem;
   padding: 0.9rem;
   width: 12.5rem;
@@ -257,7 +260,7 @@ form .submit__btn:hover {
   padding: 4px;
 }
 .postbar__container .input__submit {
-  background: #22444f;
+  background: #091f43;
   border-radius: 2rem;
   padding: 0.9rem;
   width: 12.5rem;
@@ -303,7 +306,7 @@ form .submit__btn:hover {
   font-size: 14px;
 }
 .add__comment input {
-  background: #22444f;
+  background: #091f43;
   border-radius: 2rem;
   padding: 0.9rem;
   width: 12.5rem;
@@ -407,13 +410,13 @@ form .submit__btn:hover {
 .post__container .about__post {
   display: flex;
   align-items: center;
-  flex-wrap: wrap;
   justify-content: space-between;
   padding: 15px;
 }
 .post__container .about__post img {
   width: 4rem;
-  border-radius: 30px;
+  border-radius: 50%;
+  object-fit: contain;
 }
 .post__container .about__post .user__id {
   font-size: 18px;
@@ -433,6 +436,7 @@ form .submit__btn:hover {
 .post__container .info__container {
   display: flex;
   align-items: center;
+  flex-wrap: wrap;
 }
 .post__container .info__container p {
   padding-left: 15px;
@@ -444,8 +448,20 @@ form .submit__btn:hover {
   padding: 15px;
 }
 .post__container .content__container button {
-  width: 60px;
-  margin-top: 50px;
+  background: #d86747;
+  color: #f0f2f5;
+  width: 6rem;
+  margin-top: 15px;
+  border-radius: 2rem;
+  font-weight: bold;
+  padding: 0.5rem;
+  font-size: 0.8rem;
+  border: none;
+  cursor: pointer;
+  transition: opacity, box-shadow 0.7s ease-in-out;
+}
+.post__container .content__container button:hover {
+  opacity: 0.8;
 }
 .post__container .content__container .info__text {
   margin-left: 15px;

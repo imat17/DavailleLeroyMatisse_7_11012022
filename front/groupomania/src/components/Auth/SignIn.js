@@ -28,7 +28,7 @@ const SignIn = () => {
 				data: formValues,
 			})
 				.then((res) => {
-					console.log(res.data);
+					// console.log(res.data);
 					if (res.data.message) {
 						if (res.data.message.includes('Mot de passe')) {
 							passwordError.innerHTML = res.data.message;

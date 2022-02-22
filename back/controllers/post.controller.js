@@ -9,9 +9,8 @@ module.exports.readPost = async (req, res) => {
 				{ model: UserModel, attributes: { exclude: ['password', 'isAdmin'] } },
 				{
 					model: CommentModel,
-					attributes: { exclude: ['password', 'isAdmin'] },
-					include: UserModel,
-					attributes: { exclude: ['password', 'isAdmin'] },
+					// attributes: { exclude: ['password', 'isAdmin'] },
+					include: { model: UserModel, attributes: ['id', 'picture', 'pseudo'] },
 				},
 			],
 			order: [['createdAt', 'DESC']],
@@ -56,27 +55,33 @@ module.exports.updatePost = async (req, res) => {
 	let newPost = await PostModel.findOne({ where: { id: req.params.id } });
 	if (decryptedUser === newPost.UserId) {
 		try {
-			if (req.file) {
-				newPicture = `${req.protocol}://${req.get('host')}/uploads/${req.file.filename}`;
-			}
-			if (PostModel.picture) {
-				const filename = PostModel.picture.split('/uploads')[1];
-				fs.unlink(`uploads/${filename}`, (err) => {
-					if (err) console.log(err);
-					else {
-						res.status(200).send("L'image à bien été supprimée");
-					}
-				});
-			}
-			PostModel.update(
-				{
-					text: newText,
-					picture: newPicture,
-					UserId: req.body.UserId,
-				},
-				{ where: { id: req.params.id } }
-			);
-			res.status(201).send('Le post à bien été modifié');
+			PostModel.findOne({
+				where: { id: req.params.id },
+			}).then((post) => {
+				if (req.file) {
+					newPicture = `${req.protocol}://${req.get('host')}/uploads/${req.file.filename}`;
+				}
+				if (req.file && post.picture) {
+					const filename = post.picture.split('/uploads/')[1];
+					fs.unlink(`uploads/${filename}`, (err) => {
+						if (err) console.log(err);
+						else {
+							res.status(200).send("L'image à bien été supprimée");
+						}
+					});
+				}
+				PostModel.update(
+					{
+						text: req.body.text,
+						picture: newPicture,
+						UserId: req.body.UserId,
+					},
+					{ where: { id: req.params.id } }
+				);
+				then(() => res.status(200).json({ message: 'Post modifié' })).catch(() =>
+					res.status(500).json({ error: 'Erreur serveur' })
+				);
+			});
 		} catch (err) {
 			res.status(500).send('Erreur lors de la modification du post');
 		}
@@ -85,58 +90,29 @@ module.exports.updatePost = async (req, res) => {
 	}
 };
 
-// module.exports.updatePost = async (req, res) => {
-// 	try {
-// 		let newPicture;
-// 		const decryptedUser = token.getUserId(req);
-// 		let newPost = await PostModel.findOne({ where: { id: req.params.id } });
-// 		if (decryptedUser === newPost.UserId) {
-// 			if (req.file) {
-// 				newPicture = `${req.protocol}://${req.get('host')}/uploads/${req.file.filename}`;
-// 				if (PostModel.picture) {
-// 					const filename = PostModel.split('/upload')[1];
-// 					fs.unlink(`uploads/${filename}`, (err) => {
-// 						if (err) console.log(err);
-// 						else {
-// 							console.log('Image supprimée');
-// 						}
-// 					});
-// 				}
-// 			}
-// 			if (req.body.text) {
-// 				PostModel.text = req.body.text;
-// 			}
-// 			PostModel.UserId = req.body.UserId;
-// 			PostModel.picture = newPicture;
-// 			const newPost = await PostModel.save({
-// 				fields: ['text', 'picture'],
-// 			});
-// 			res.status(200).json({ newPost: newPost, messageRetour: 'post modifié' });
-// 		} else {
-// 			res.status(400).json({ message: "Vous n'avez pas les droits requis" });
-// 		}
-// 	} catch (err) {
-// 		return res.status(500).send({ error: 'Erreur serveur' });
-// 	}
-// };
-
 module.exports.deletePost = async (req, res) => {
 	try {
 		const decryptedUser = token.getUserId(req);
 		const isAdmin = await UserModel.findOne({ where: { id: decryptedUser } });
 		let deletePost = await PostModel.findOne({ where: { id: req.params.id } });
 		if (decryptedUser === deletePost.UserId || isAdmin.isAdmin === true) {
-			if (PostModel.picture) {
-				const filename = PostModel.picture.split('/uploads')[1];
-				fs.unlink(`uploads/${filename}`, () => {
-					PostModel.destroy({
-						where: { id: req.params.id },
+			PostModel.findOne({
+				where: { id: req.params.id },
+			}).then((post) => {
+				if (post.picture) {
+					const filename = post.picture.split('/uploads/')[1];
+					fs.unlink(`uploads/${filename}`, () => {
+						PostModel.destroy({
+							where: { id: req.params.id },
+						})
+							.then(() => res.status(200).json({ message: 'Post supprimé' }))
+							.catch(() => res.status(500).json({ error: 'Erreur serveur' }));
 					});
-				});
-			} else {
-				PostModel.destroy({ where: { id: req.params.id } });
-				res.status(200).json({ message: 'Post supprimé' });
-			}
+				} else {
+					PostModel.destroy({ where: { id: req.params.id } });
+					res.status(200).json({ message: 'Post supprimé' });
+				}
+			});
 		} else {
 			res.status(400).json({ message: 'Utilisateur non authentifié' });
 		}

@@ -44,15 +44,19 @@ const OnePost = (props) => {
 						title='Supprimer le post'
 						onClick={deletePost}
 					/>
-					<img src={Edit} className='edit' alt='edit' title='Editer le post' onClick={editMode} />
+					<img
+						src={Edit}
+						className='edit'
+						alt='edit'
+						title='Editer le post'
+						onClick={() => setToggle(!toggle)}
+					/>
 				</div>
 			);
 		} else {
 			return null;
 		}
 	};
-
-	const editMode = () => {};
 
 	const imgDisplay = () => {
 		if (props.postInfo.picture === '') {
@@ -95,21 +99,35 @@ const OnePost = (props) => {
 		}
 	};
 
+	const editOrNot = () => {
+		if (toggle === false) {
+			return <div className='new__post'>{props.postInfo.text}</div>;
+		} else if (toggle === true) {
+			return (
+				<input
+					type='text'
+					name='text'
+					className='new__post'
+					onChange={handlePostChange}
+					defaultValue={props.postInfo.text}
+				/>
+			);
+		}
+	};
+
 	const displayData = () => {
 		if (props.postInfo.UserId === uid) {
 			return (
 				<>
 					<div className='content__container'>
-						<input
-							type='text'
-							name='text'
-							className='new__post'
-							onChange={handlePostChange}
-							defaultValue={props.postInfo.text}
-						/>
+						{editOrNot()}
 						{imgDisplay()}
-						<input type='file' name='file' onChange={(e) => setNewFile(e.target.files[0])} />
-						<button onClick={editPost}></button>
+						{toggle && (
+							<>
+								<input type='file' name='file' onChange={(e) => setNewFile(e.target.files[0])} />
+								<button onClick={editPost}>Sauvegarder</button>
+							</>
+						)}
 					</div>
 				</>
 			);

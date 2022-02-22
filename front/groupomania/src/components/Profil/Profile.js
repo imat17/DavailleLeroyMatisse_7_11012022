@@ -9,6 +9,7 @@ const ProfileForm = () => {
 	const [file, setFile] = useState(null);
 
 	const uid = useContext(UidContext);
+	console.log(file);
 
 	useEffect(() => {
 		axios({
@@ -49,13 +50,17 @@ const ProfileForm = () => {
 	};
 
 	const editProfile = () => {
+		// const formPicture = new FormData();
+		// formPicture.append('id', uid);
+		// formPicture.append('email', email);
+		// formPicture.append('pseudo', pseudo);
 		axios({
 			method: 'put',
 			url: `${process.env.REACT_APP_API_URL}api/user/${uid}`,
 			withCredentials: true,
 			data: {
-				email,
-				pseudo,
+				email: email,
+				pseudo: pseudo,
 			},
 		})
 			.then((res) => {
@@ -66,7 +71,7 @@ const ProfileForm = () => {
 			});
 	};
 
-	// const imageChange = (e) => {
+	// const previewImage = (e) => {
 	// 	setFile(URL.createObjectURL(e.target.files[0]));
 	// };
 
@@ -82,20 +87,22 @@ const ProfileForm = () => {
 		})
 			.then((res) => {
 				console.log(res);
+				setFile(res.data.picture);
 			})
 			.catch((err) => {
 				console.log(err);
 			});
 	};
 
-	const editData = () => {
+	const editData = (e) => {
+		e.preventDefault();
 		editProfile();
 		editProfilePicture();
 	};
 
 	return (
 		<>
-			<form action='' encType='multipart/form-data' onSubmit={editData} id='profile__form'>
+			<form action='' onSubmit={editData} id='profile__form'>
 				<div className='profile__pic'>
 					<img src={file} alt='Profilepicture' />
 					<input type='file' onChange={(e) => setFile(e.target.files[0])} />

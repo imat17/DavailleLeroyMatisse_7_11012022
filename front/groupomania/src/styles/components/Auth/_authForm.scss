@@ -35,6 +35,9 @@ form {
         border-radius: $border-radius;
         font-weight: bold;
 	}
+	div {
+		margin-top: 5px;
+	}
 	.submit__btn {
 		@include btn-style;
         padding: 0;

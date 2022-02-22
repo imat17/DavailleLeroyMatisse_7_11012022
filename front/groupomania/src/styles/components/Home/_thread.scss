@@ -21,19 +21,19 @@
 		margin-left: 15px;
 		cursor: pointer;
 		&:focus {
-			border: .5px solid $white;
+			border: 0.5px solid $white;
 			border-radius: $border-radius;
 		}
 	}
 	.about__post {
 		display: flex;
 		align-items: center;
-		flex-wrap: wrap;
 		justify-content: space-between;
 		padding: 15px;
 		img {
 			width: 4rem;
-			border-radius: 30px;
+			border-radius: 50%;
+			object-fit: contain;
 		}
 		.user__id {
 			font-size: 18px;
@@ -54,6 +54,7 @@
 	.info__container {
 		display: flex;
 		align-items: center;
+		flex-wrap: wrap;
 		p {
 			padding-left: 15px;
 		}
@@ -64,8 +65,20 @@
 		flex-direction: column;
 		padding: 15px;
 		button {
-			width: 60px;
-			margin-top: 50px;
+			background: $orange;
+			color: $white;
+			width: 6rem;
+			margin-top: 15px;
+			border-radius: 2rem;
+			font-weight: bold;
+			padding: 0.5rem;
+			font-size: 0.8rem;
+			border: none;
+			cursor: pointer;
+			transition: opacity, box-shadow 0.7s ease-in-out;
+			&:hover {
+				opacity: 0.8;
+			}
 		}
 		.info__text {
 			margin-left: 15px;
