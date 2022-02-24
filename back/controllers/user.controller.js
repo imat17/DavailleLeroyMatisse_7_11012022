@@ -18,42 +18,6 @@ module.exports.getOneUser = async (req, res) => {
 	res.status(200).json(user);
 };
 
-// module.exports.updateUser = async (req, res) => {
-// 	const decryptedUser = token.getUserId(req);
-// 	try {
-// 		const User = await UserModel.findOne({ where: { id: decryptedUser } });
-// 		if (User !== null) {
-// 			UserModel.findOne({
-// 				where: { id: decryptedUser },
-// 			}).then((user) => {
-// 				if (req.file) {
-// 					newProfilePicture = `${req.protocol}://${req.get('host')}/uploads/${req.file.filename}`;
-// 				}
-// 				if (user.picture) {
-// 					const filename = user.picture.split('/uploads/')[1];
-// 					fs.unlink(`uploads/${filename}`, (err) => {
-// 						if (err) console.log(err);
-// 						else {
-// 							res.status(200).send("L'image à bien été supprimée");
-// 						}
-// 					});
-// 				}
-// 				UserModel.update(
-// 					{ pseudo: req.body.pseudo, email: req.body.email, picture: newProfilePicture },
-// 					{ where: { id: req.body.id } }
-// 				);
-// 				then(() => res.status(200).json({ message: 'Utilisateur modifié' })).catch(() =>
-// 					res.status(500).json({ error: 'Erreur serveur' })
-// 				);
-// 			});
-// 		} else {
-// 			res.status(400).json({ message: 'Utilisateur non authentifié' });
-// 		}
-// 	} catch (err) {
-// 		console.log(err);
-// 		// res.status(500).send('Erreur lors de la modification du post');
-// 	}
-// };
 module.exports.updateUser = async (req, res) => {
 	const decryptedUser = token.getUserId(req);
 	try {

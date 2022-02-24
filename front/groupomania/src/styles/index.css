@@ -97,7 +97,7 @@ header .profile__preview img {
 .auth__form {
   margin: 130px auto;
   max-width: 600px;
-  background: #d86747;
+  background: #d1515a;
   border-radius: 6px;
   display: flex;
   justify-content: center;
@@ -184,7 +184,7 @@ form .submit__btn:hover {
 .profile__container {
   margin: 130px auto;
   max-width: 600px;
-  background: #d86747;
+  background: #d1515a;
   border-radius: 6px;
   display: flex;
   justify-content: center;
@@ -239,11 +239,11 @@ form .submit__btn:hover {
 }
 .profile__input input:nth-child(2) {
   text-align: center;
-  background-color: red !important;
+  background-color: #242424 !important;
 }
 
 .postbar__container {
-  background: #d86747;
+  background: #d1515a;
   max-width: 800px;
   margin: 30px auto;
   height: 200px;
@@ -316,7 +316,7 @@ form .submit__btn:hover {
   border: none;
   cursor: pointer;
   transition: opacity, box-shadow 0.7s ease-in-out;
-  background: #d86747;
+  background: #d1515a;
   padding: 0;
   margin-top: 10px;
   max-width: 20%;
@@ -388,7 +388,7 @@ form .submit__btn:hover {
   border-radius: 6px;
   max-width: 900px;
   min-height: 250px;
-  background-color: #22444f;
+  background-color: rgba(9, 31, 67, 0.8);
   color: white;
   font-weight: bold;
   box-shadow: 0 0 13px #555;
@@ -448,7 +448,7 @@ form .submit__btn:hover {
   padding: 15px;
 }
 .post__container .content__container button {
-  background: #d86747;
+  background: #d1515a;
   color: #f0f2f5;
   width: 6rem;
   margin-top: 15px;

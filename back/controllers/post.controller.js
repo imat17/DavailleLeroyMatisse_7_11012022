@@ -31,17 +31,23 @@ module.exports.createPost = async (req, res) => {
 			} else {
 				imageUrl = '';
 			}
-			const newPost = PostModel.create({
+			const newPost = await PostModel.create({
 				UserId: User.id,
 				text: req.body.text,
 				picture: imageUrl,
 			});
-			try {
-				const post = await newPost.save();
-				return res.status(201).json(post);
-			} catch (err) {
-				return res.status(500).send(err);
-			}
+			const allPosts = await PostModel.findAll({
+				include: [
+					{ model: UserModel, attributes: { exclude: ['password', 'isAdmin'] } },
+					{
+						model: CommentModel,
+						// attributes: { exclude: ['password', 'isAdmin'] },
+						include: { model: UserModel, attributes: ['id', 'picture', 'pseudo'] },
+					},
+				],
+				order: [['createdAt', 'DESC']],
+			});
+			res.status(200).send(allPosts);
 		} else {
 			res.status(400).send({ message: 'Utilisateur non authentifié' });
 		}
@@ -57,36 +63,33 @@ module.exports.updatePost = async (req, res) => {
 		try {
 			PostModel.findOne({
 				where: { id: req.params.id },
-			}).then((post) => {
-				if (req.file) {
-					newPicture = `${req.protocol}://${req.get('host')}/uploads/${req.file.filename}`;
-				}
-				if (req.file && post.picture) {
-					const filename = post.picture.split('/uploads/')[1];
-					fs.unlink(`uploads/${filename}`, (err) => {
-						if (err) console.log(err);
-						else {
-							res.status(200).send("L'image à bien été supprimée");
+			})
+				.then((post) => {
+					if (req.file) {
+						newPicture = `${req.protocol}://${req.get('host')}/uploads/${req.file.filename}`;
+						if (req.file && post.picture) {
+							const filename = post.picture.split('/uploads/')[1];
+							fs.unlink(`uploads/${filename}`, (err) => {
+								if (err) console.log(err);
+							});
 						}
-					});
-				}
-				PostModel.update(
-					{
-						text: req.body.text,
-						picture: newPicture,
-						UserId: req.body.UserId,
-					},
-					{ where: { id: req.params.id } }
-				);
-				then(() => res.status(200).json({ message: 'Post modifié' })).catch(() =>
-					res.status(500).json({ error: 'Erreur serveur' })
-				);
-			});
+					} else {
+						newPicture = '';
+					}
+					PostModel.update(
+						{
+							text: req.body.text,
+							picture: newPicture,
+							UserId: req.body.UserId,
+						},
+						{ where: { id: req.params.id } }
+					);
+				})
+				.then(() => res.status(200).json({ message: 'Post modifié' }))
+				.catch((err) => console.log(err));
 		} catch (err) {
 			res.status(500).send('Erreur lors de la modification du post');
 		}
-	} else {
-		res.status(400).json({ message: 'Utilisateur non authentifié' });
 	}
 };
 
@@ -122,6 +125,7 @@ module.exports.deletePost = async (req, res) => {
 };
 
 // Comments
+
 module.exports.commentPost = async (req, res) => {
 	const decryptedUser = token.getUserId(req);
 	try {
@@ -134,10 +138,21 @@ module.exports.commentPost = async (req, res) => {
 					commenterPseudo: req.body.commenterPseudo,
 					UserId: req.body.UserId,
 				});
-				const comment = await newComment.save();
-				return res.status(201).json(comment);
+				let currentPost = await PostModel.findOne({
+					include: [
+						{ model: UserModel, attributes: { exclude: ['password', 'isAdmin'] } },
+						{
+							model: CommentModel,
+							// attributes: { exclude: ['password', 'isAdmin'] },
+							include: { model: UserModel, attributes: ['id', 'picture', 'pseudo'] },
+						},
+					],
+					order: [['createdAt', 'DESC']],
+					where: { id: req.params.id },
+				});
+				res.status(201).json(currentPost);
 			} catch (err) {
-				res.status(500).send('Commentaire non publié');
+				res.status(500).send(`Erreur lors de l'ajout du commentaire`);
 			}
 		} else {
 			res.status(400).send({ message: 'Utilisateur non authentifié' });
@@ -171,7 +186,20 @@ module.exports.deleteCommentPost = async (req, res) => {
 			await CommentModel.destroy({
 				where: { id: req.params.id },
 			});
-			res.status(200).json({ message: 'Le commentaire à bien été supprimé' });
+			console.log(comment);
+			let currentPost = await PostModel.findOne({
+				include: [
+					{ model: UserModel, attributes: { exclude: ['password', 'isAdmin'] } },
+					{
+						model: CommentModel,
+						// attributes: { exclude: ['password', 'isAdmin'] },
+						include: { model: UserModel, attributes: ['id', 'picture', 'pseudo'] },
+					},
+				],
+				order: [['createdAt', 'DESC']],
+				where: { id: comment.PostId },
+			});
+			res.status(200).json(currentPost);
 		} catch (err) {
 			return res
 				.status(500)

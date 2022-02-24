@@ -1,19 +1,19 @@
 import React, { useState, useContext } from 'react';
 import axios from 'axios';
-import { UidContext } from '../AppContext';
-
+import { UidContext, useStateValue } from '../AppContext';
 
 const PostBar = () => {
 	const [text, setText] = useState('');
 	const [file, setFile] = useState(null);
 	const uid = useContext(UidContext);
+	const [{ posts }, dispatch] = useStateValue();
 
 	const handleFile = (e) => {
-		console.log(e.target.files[0].name);
 		setFile(e.target.files[0]);
 	};
 
-	const handlePost = () => {
+	const handlePost = (e) => {
+		e.preventDefault();
 		const postFormData = new FormData();
 		postFormData.append('text', text);
 		postFormData.append('UserId', uid);
@@ -26,7 +26,8 @@ const PostBar = () => {
 			data: postFormData,
 		})
 			.then((res) => {
-				console.log(res);
+			
+				dispatch({ action: 'updatePosts', data: res.data });
 			})
 			.catch((err) => {
 				console.log(err);
@@ -38,11 +39,7 @@ const PostBar = () => {
 			<div className='profile__picture'>
 				<img src='' alt='' />
 			</div>
-			<form
-				encType=''
-				onSubmit={handlePost}
-				id='post__form'
-			>
+			<form encType='' onSubmit={handlePost} id='post__form'>
 				<textarea
 					className='input__post'
 					type='text'

@@ -20,8 +20,7 @@ const Comment = (props) => {
 			withCredentials: true,
 		})
 			.then((res) => {
-				console.log(res);
-				window.location.reload();
+				props.updatePost(res.data);
 			})
 			.catch((err) => {
 				console.log(err);

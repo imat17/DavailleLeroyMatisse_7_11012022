@@ -1,5 +1,6 @@
 import React, { useContext, useState } from 'react';
 import { UidContext, adminContext } from '../AppContext';
+import { useStateValue } from '../AppContext';
 import axios from 'axios';
 import Trash from '../../media/icons/trash-bin.png';
 import Edit from '../../media/icons/edit.png';
@@ -15,18 +16,22 @@ const OnePost = (props) => {
 	const admin = useContext(adminContext);
 	const [toggle, setToggle] = useState(false);
 	const [newPost, setNewPost] = useState(props.postInfo.text);
-	const [newFile, setNewFile] = useState(props.postInfo.picture);
-	// console.log(newPost);
-	// console.log(newFile);
+	const [newFile, setNewFile] = useState(null);
+	const [post, setPost] = useState(props.postInfo);
+	const [{ posts }, dispatch] = useStateValue();
+	console.log(newPost);
+	console.log(newFile);
 
 	const deletePost = () => {
 		axios
-			.delete(`${process.env.REACT_APP_API_URL}api/post/${props.postInfo.id}`, {
+			.delete(`${process.env.REACT_APP_API_URL}api/post/${post.id}`, {
 				withCredentials: true,
 			})
 			.then((res) => {
-				console.log(res);
-				window.location.reload();
+				dispatch({
+					action: 'updatePosts',
+					data: posts.filter((el) => el.id !== post.id),
+				});
 			})
 			.catch((err) => {
 				console.log(err);
@@ -34,7 +39,7 @@ const OnePost = (props) => {
 	};
 
 	const iconsDisplay = () => {
-		if (uid === props.postInfo.User.id || admin === true) {
+		if (uid === post.User.id || admin === true) {
 			return (
 				<div className='trash__container'>
 					<img
@@ -59,12 +64,12 @@ const OnePost = (props) => {
 	};
 
 	const imgDisplay = () => {
-		if (props.postInfo.picture === '') {
+		if (post.picture === '') {
 			return;
 		} else {
 			return (
 				<div className='pic__container'>
-					<img src={props.postInfo.picture} alt='profile pic' />
+					<img src={post.picture} alt='profile pic' />
 				</div>
 			);
 		}
@@ -77,7 +82,7 @@ const OnePost = (props) => {
 		editPostForm.append('UserId', uid);
 		axios({
 			method: 'put',
-			url: `${process.env.REACT_APP_API_URL}api/post/${props.postInfo.id}`,
+			url: `${process.env.REACT_APP_API_URL}api/post/${post.id}`,
 			withCredentials: true,
 			data: editPostForm,
 		})
@@ -93,15 +98,16 @@ const OnePost = (props) => {
 	const handlePostChange = (e) => {
 		if (newPost !== null || '') {
 			setNewPost(e.target.value);
-			return;
-		} else {
-			return;
 		}
+	};
+
+	const handleFileChange = (e) => {
+		setNewFile(e.target.files[0]);
 	};
 
 	const editOrNot = () => {
 		if (toggle === false) {
-			return <div className='new__post'>{props.postInfo.text}</div>;
+			return <div className='new__post'>{post.text}</div>;
 		} else if (toggle === true) {
 			return (
 				<input
@@ -109,14 +115,14 @@ const OnePost = (props) => {
 					name='text'
 					className='new__post'
 					onChange={handlePostChange}
-					defaultValue={props.postInfo.text}
+					defaultValue={post.text}
 				/>
 			);
 		}
 	};
 
 	const displayData = () => {
-		if (props.postInfo.UserId === uid) {
+		if (post.UserId === uid) {
 			return (
 				<>
 					<div className='content__container'>
@@ -124,7 +130,7 @@ const OnePost = (props) => {
 						{imgDisplay()}
 						{toggle && (
 							<>
-								<input type='file' name='file' onChange={(e) => setNewFile(e.target.files[0])} />
+								<input type='file' name='file' onChange={handleFileChange} />
 								<button onClick={editPost}>Sauvegarder</button>
 							</>
 						)}
@@ -134,7 +140,7 @@ const OnePost = (props) => {
 		} else {
 			return (
 				<div className='content__container'>
-					<p className='info__text'>{props.postInfo.text}</p>
+					<p className='info__text'>{post.text}</p>
 					{imgDisplay()}
 				</div>
 			);
@@ -145,18 +151,18 @@ const OnePost = (props) => {
 		<li>
 			<div className='about__post'>
 				<div className='info__container'>
-					<img src={props.postInfo.User.picture} alt='profile pic' />
-					<p className='user__id'>{props.postInfo.User.pseudo}</p>
+					<img src={post.User.picture} alt='profile pic' />
+					<p className='user__id'>{post.User.pseudo}</p>
 				</div>
 				<div className='timestamp__container'>
-					<p className='timestamp'>{dayjs(props.postInfo.createdAt).locale('fr').fromNow()}</p>
+					<p className='timestamp'>{dayjs(post.createdAt).locale('fr').fromNow()}</p>
 					{iconsDisplay()}
 				</div>
 			</div>
 			{displayData()}
-			<AddComment postInfo={props.postInfo} />
-			{props.postInfo.Comments.map((comment) => {
-				return <Comment key={comment.id} comment={comment} />;
+			<AddComment postInfo={post} updatePost={(post) => setPost(post)} />
+			{post.Comments.map((comment) => {
+				return <Comment key={comment.id} comment={comment} updatePost={(post) => setPost(post)} />;
 			})}
 		</li>
 	);

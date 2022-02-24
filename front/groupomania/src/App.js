@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import Routes from './components/Routes';
-import { adminContext, UidContext } from './components/AppContext';
+import { adminContext, GlobalProvider, UidContext } from './components/AppContext';
 import axios from 'axios';
 
 const App = () => {
@@ -38,11 +38,13 @@ const App = () => {
 	}, [admin, uid]);
 
 	return (
-		<UidContext.Provider value={uid}>
-		<adminContext.Provider value={admin}>
-			<Routes />
-		</adminContext.Provider>
-		</UidContext.Provider>
+		<GlobalProvider>
+			<UidContext.Provider value={uid}>
+				<adminContext.Provider value={admin}>
+					<Routes />
+				</adminContext.Provider>
+			</UidContext.Provider>
+		</GlobalProvider>
 	);
 };
 
