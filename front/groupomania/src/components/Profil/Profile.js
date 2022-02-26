@@ -9,7 +9,6 @@ const ProfileForm = () => {
 	const [file, setFile] = useState(null);
 
 	const uid = useContext(UidContext);
-	console.log(file);
 
 	useEffect(() => {
 		axios({
@@ -87,7 +86,6 @@ const ProfileForm = () => {
 			data: formPicture,
 		})
 			.then((res) => {
-				console.log(res);
 				setFile(res.data.picture);
 			})
 			.catch((err) => {

@@ -1,7 +1,5 @@
 const { UserModel, PostModel } = require('../models/Index');
 const token = require('../middlewares/auth.middleware');
-const fs = require('fs');
-// const { post } = require('../routes/post.routes');
 
 module.exports.getAllUsers = async (req, res) => {
 	const users = await UserModel.findAll({

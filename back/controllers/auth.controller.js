@@ -1,6 +1,5 @@
 const UserModel = require('../models/User');
 const jwt = require('jsonwebtoken');
-const { signUpErrors, signInErrors } = require('../utils/errors.utils');
 const bcrypt = require('bcrypt');
 
 //Json Web Token

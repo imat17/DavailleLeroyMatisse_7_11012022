@@ -2,8 +2,6 @@ const router = require('express').Router();
 const authController = require('../controllers/auth.controller');
 const userController = require('../controllers/user.controller');
 const uploadController = require('../controllers/upload.controller');
-// const multer = require('multer');
-// const upload = multer();
 const upload = require('../middlewares/multer-config.middleware');
 
 // Routes d'authentification

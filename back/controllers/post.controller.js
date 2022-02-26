@@ -1,4 +1,4 @@
-const { UserModel, PostModel, CommentModel, LikeModel } = require('../models/Index');
+const { UserModel, PostModel, CommentModel } = require('../models/Index');
 const fs = require('fs');
 const token = require('../middlewares/auth.middleware');
 
@@ -81,6 +81,13 @@ module.exports.updatePost = async (req, res) => {
 						);
 					} else {
 						newPicture = null;
+						PostModel.update(
+							{
+								text: req.body.text,
+								UserId: req.body.UserId,
+							},
+							{ where: { id: req.params.id } }
+						);
 					}
 				})
 				.then(() => res.status(200).json({ message: 'Post modifié' }))
@@ -141,7 +148,6 @@ module.exports.commentPost = async (req, res) => {
 						{ model: UserModel, attributes: { exclude: ['password', 'isAdmin'] } },
 						{
 							model: CommentModel,
-							// attributes: { exclude: ['password', 'isAdmin'] },
 							include: { model: UserModel, attributes: ['id', 'picture', 'pseudo'] },
 						},
 					],
@@ -190,7 +196,6 @@ module.exports.deleteCommentPost = async (req, res) => {
 					{ model: UserModel, attributes: { exclude: ['password', 'isAdmin'] } },
 					{
 						model: CommentModel,
-						// attributes: { exclude: ['password', 'isAdmin'] },
 						include: { model: UserModel, attributes: ['id', 'picture', 'pseudo'] },
 					},
 				],
@@ -205,29 +210,5 @@ module.exports.deleteCommentPost = async (req, res) => {
 		}
 	} else {
 		res.status(400).json({ message: 'Utilisateur non authentifié' });
-	}
-};
-
-// Likes / Unlikes
-module.exports.likePost = async (req, res) => {
-	try {
-		await LikeModel.create({
-			PostId: req.params.id,
-			UserId: req.body.UserId,
-		});
-		return res.status(201).send('Commentaire liké');
-	} catch (err) {
-		res.status(500).send('Erreur lors du like');
-	}
-};
-
-module.exports.unlikePost = async (req, res) => {
-	try {
-		await LikeModel.destroy({
-			where: { UserId: req.body.UserId },
-		});
-		res.status(201).send('Like annulé');
-	} catch {
-		res.status(500).send('Erreur lors de la suppression du like');
 	}
 };

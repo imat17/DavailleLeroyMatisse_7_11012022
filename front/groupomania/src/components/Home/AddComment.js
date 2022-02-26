@@ -6,9 +6,7 @@ const AddComment = (props) => {
 	const uid = useContext(UidContext);
 	const [text, setText] = useState('');
 	const [commentPseudo, setCommentPseudo] = useState('');
-	// const form = useRef();
 	const postInfo = props.postInfo;
-	// console.log(props)
 
 	useEffect(() => {
 		axios({
@@ -18,7 +16,6 @@ const AddComment = (props) => {
 		})
 			.then((res) => {
 				setCommentPseudo(res.data.pseudo);
-				console.log(res);
 			})
 			.catch((err) => {
 				console.log(err);

@@ -7,8 +7,6 @@ router.get('/', postController.readPost);
 router.post('/', upload, postController.createPost);
 router.put('/:id', upload, postController.updatePost);
 router.delete('/:id', postController.deletePost);
-router.patch('/like-post/:id', postController.likePost);
-router.patch('/unlike-post/:id', postController.unlikePost);
 
 // Routes comments
 router.patch('/comment-post/:id', postController.commentPost);

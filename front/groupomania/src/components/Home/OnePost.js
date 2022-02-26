@@ -19,8 +19,6 @@ const OnePost = (props) => {
 	const [newFile, setNewFile] = useState(null);
 	const [post, setPost] = useState(props.postInfo);
 	const [{ posts }, dispatch] = useStateValue();
-	console.log(newPost);
-	console.log(newFile);
 
 	const deletePost = () => {
 		axios
@@ -87,7 +85,6 @@ const OnePost = (props) => {
 			data: editPostForm,
 		})
 			.then((res) => {
-				console.log(res);
 				window.location.reload();
 			})
 			.catch((err) => {

@@ -26,7 +26,6 @@ const PostBar = () => {
 			data: postFormData,
 		})
 			.then((res) => {
-			
 				dispatch({ action: 'updatePosts', data: res.data });
 			})
 			.catch((err) => {

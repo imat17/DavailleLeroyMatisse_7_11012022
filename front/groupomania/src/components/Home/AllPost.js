@@ -4,7 +4,6 @@ import OnePost from './OnePost';
 import { useStateValue } from '../AppContext';
 
 const AllPost = () => {
-	// const [posts, setPosts] = useState(null);
 	const [{ posts }, dispatch] = useStateValue();
 
 	useEffect(() => {
