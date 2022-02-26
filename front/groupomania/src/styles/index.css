@@ -316,7 +316,7 @@ form .submit__btn:hover {
   border: none;
   cursor: pointer;
   transition: opacity, box-shadow 0.7s ease-in-out;
-  background: #d1515a;
+  background: #95282F;
   padding: 0;
   margin-top: 10px;
   max-width: 20%;
@@ -448,7 +448,7 @@ form .submit__btn:hover {
   padding: 15px;
 }
 .post__container .content__container button {
-  background: #d1515a;
+  background: #95282F;
   color: #f0f2f5;
   width: 6rem;
   margin-top: 15px;

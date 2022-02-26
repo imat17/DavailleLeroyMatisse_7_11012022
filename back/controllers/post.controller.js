@@ -9,7 +9,6 @@ module.exports.readPost = async (req, res) => {
 				{ model: UserModel, attributes: { exclude: ['password', 'isAdmin'] } },
 				{
 					model: CommentModel,
-					// attributes: { exclude: ['password', 'isAdmin'] },
 					include: { model: UserModel, attributes: ['id', 'picture', 'pseudo'] },
 				},
 			],
@@ -41,7 +40,6 @@ module.exports.createPost = async (req, res) => {
 					{ model: UserModel, attributes: { exclude: ['password', 'isAdmin'] } },
 					{
 						model: CommentModel,
-						// attributes: { exclude: ['password', 'isAdmin'] },
 						include: { model: UserModel, attributes: ['id', 'picture', 'pseudo'] },
 					},
 				],
@@ -66,24 +64,24 @@ module.exports.updatePost = async (req, res) => {
 			})
 				.then((post) => {
 					if (req.file) {
-						newPicture = `${req.protocol}://${req.get('host')}/uploads/${req.file.filename}`;
+						let newPicture = `${req.protocol}://${req.get('host')}/uploads/${req.file.filename}`;
 						if (req.file && post.picture) {
 							const filename = post.picture.split('/uploads/')[1];
 							fs.unlink(`uploads/${filename}`, (err) => {
 								if (err) console.log(err);
 							});
 						}
+						PostModel.update(
+							{
+								text: req.body.text,
+								picture: newPicture,
+								UserId: req.body.UserId,
+							},
+							{ where: { id: req.params.id } }
+						);
 					} else {
-						newPicture = '';
+						newPicture = null;
 					}
-					PostModel.update(
-						{
-							text: req.body.text,
-							picture: newPicture,
-							UserId: req.body.UserId,
-						},
-						{ where: { id: req.params.id } }
-					);
 				})
 				.then(() => res.status(200).json({ message: 'Post modifié' }))
 				.catch((err) => console.log(err));
