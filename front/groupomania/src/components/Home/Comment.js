@@ -80,6 +80,7 @@ const Comment = (props) => {
 						name='text'
 						id='text'
 						className='new__value'
+						aria-label='Editez votre commentaire'
 						onChange={handleChange}
 						onBlur={editComment}
 						defaultValue={comment.text}

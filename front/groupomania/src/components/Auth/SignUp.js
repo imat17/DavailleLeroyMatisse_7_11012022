@@ -28,6 +28,10 @@ const SignUp = () => {
 					if (res.data.message) {
 						alert(res.data.message);
 					}
+					alert(
+						`Votre inscription à bien été prise en compte, vous pouvez maintenant vous connecter`
+					);
+					setFormValues(initialValues);
 				})
 				.catch((err) => {
 					console.log(err);
@@ -63,7 +67,7 @@ const SignUp = () => {
 	};
 
 	return (
-		<form action='' onSubmit={handleSubmit} id='signIn__form'>
+		<form action='' onSubmit={handleSubmit} id='signIn__form' label='sign-up form'>
 			<label htmlFor='email'>Email</label>
 			<br />
 			<input type='text' name='email' id='email' onChange={handleChange} value={formValues.email} />

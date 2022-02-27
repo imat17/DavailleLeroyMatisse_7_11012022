@@ -27,6 +27,8 @@ const PostBar = () => {
 		})
 			.then((res) => {
 				dispatch({ action: 'updatePosts', data: res.data });
+				setFile(null);
+				setText('');
 			})
 			.catch((err) => {
 				console.log(err);
@@ -44,13 +46,19 @@ const PostBar = () => {
 					type='text'
 					name='text'
 					id='text'
+					aria-label='Ecrivez un post'
 					onChange={(e) => setText(e.target.value)}
 					value={text}
 					placeholder='Exprimez-vous !'
 				/>
-				<input type='file' name='picture' onChange={handleFile} className='input__file' />
-				<label htmlFor='file' className='label__file'></label>
-				<input className='input__submit' type='submit' />
+				<input
+					type='file'
+					aria-label='Ajoutez une image'
+					name='picture'
+					onChange={handleFile}
+					className='input__file'
+				/>
+				<input aria-label='Envoyer' className='input__submit' type='submit' />
 			</form>
 		</div>
 	);

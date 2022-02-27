@@ -104,7 +104,11 @@ const ProfileForm = () => {
 			<form action='' onSubmit={editData} id='profile__form'>
 				<div className='profile__pic'>
 					<img src={file} alt='Profilepicture' />
-					<input type='file' onChange={(e) => setFile(e.target.files[0])} />
+					<input
+						type='file'
+						aria-label='Editez votre photo de profil'
+						onChange={(e) => setFile(e.target.files[0])}
+					/>
 					{/* <img src={imageFile} alt="" /> */}
 				</div>
 				<label htmlFor='email'>Email</label>
@@ -130,7 +134,12 @@ const ProfileForm = () => {
 				<div className='pseudo__error'></div>
 				<div className='profile__input'>
 					<input type='submit' value='Sauvegarder' />
-					<input type='' onClick={deleteProfile} defaultValue='Supprimer mon compte' />
+					<input
+						type=''
+						aria-label='Supprimez votre compte'
+						onClick={deleteProfile}
+						defaultValue='Supprimer mon compte'
+					/>
 				</div>
 			</form>
 		</>

@@ -149,7 +149,7 @@ const OnePost = (props) => {
 			<div className='about__post'>
 				<div className='info__container'>
 					<img src={post.User.picture} alt='profile pic' />
-					<p className='user__id'>{post.User.pseudo}</p>
+					<h3 className='user__id'>{post.User.pseudo}</h3>
 				</div>
 				<div className='timestamp__container'>
 					<p className='timestamp'>{dayjs(post.createdAt).locale('fr').fromNow()}</p>

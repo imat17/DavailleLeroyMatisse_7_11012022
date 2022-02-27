@@ -15,9 +15,11 @@ module.exports.uploadProfil = async (req, res) => {
 				}
 				if (user.picture && req.file) {
 					const filename = user.picture.split('/uploads/')[1];
-					fs.unlink(`uploads/${filename}`, (err) => {
-						if (err) console.log(err);
-					});
+					if (filename !== 'random-user.png') {
+						fs.unlink(`uploads/${filename}`, (err) => {
+							if (err) console.log(err);
+						});
+					}
 				}
 				UserModel.update(
 					{
@@ -25,7 +27,9 @@ module.exports.uploadProfil = async (req, res) => {
 					},
 					{ where: { id: req.body.id } }
 				)
-					.then(() => res.status(200).json({ message: 'Utilisateur modifié', picture: newProfilePicture}))
+					.then(() =>
+						res.status(200).json({ message: 'Utilisateur modifié', picture: newProfilePicture })
+					)
 					.catch(() => res.status(500).json({ error: 'Erreur serveur' }));
 			});
 		} else {

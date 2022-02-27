@@ -29,7 +29,6 @@ const App = () => {
 			withCredentials: true,
 		})
 			.then((res) => {
-				// console.log(res);
 				setAdmin(res.data.isAdmin);
 			})
 			.catch((err) => {

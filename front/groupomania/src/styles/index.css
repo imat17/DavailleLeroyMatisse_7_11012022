@@ -254,7 +254,6 @@ form .submit__btn:hover {
   width: 70%;
   height: 100px;
   border-radius: 6px;
-  text-align: top;
   resize: none;
   font-size: 16px;
   padding: 4px;
@@ -274,7 +273,7 @@ form .submit__btn:hover {
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-top: 2rem;
+  margin-top: 1rem;
   margin-bottom: 2rem;
 }
 .postbar__container .input__submit:hover {
@@ -344,7 +343,6 @@ form .submit__btn:hover {
   color: #f0f2f5;
   font-family: "Raleway", sans-serif;
   font-weight: bold;
-  text-align: top;
   cursor: pointer;
 }
 .comment__container .new__value:focus {
@@ -438,7 +436,7 @@ form .submit__btn:hover {
   align-items: center;
   flex-wrap: wrap;
 }
-.post__container .info__container p {
+.post__container .info__container h3 {
   padding-left: 15px;
 }
 .post__container .content__container {

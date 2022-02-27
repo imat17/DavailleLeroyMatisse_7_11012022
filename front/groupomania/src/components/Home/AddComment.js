@@ -47,11 +47,12 @@ const AddComment = (props) => {
 
 	return (
 		<div className='add__comment'>
-			<form action='' onSubmit={addComment} id='comment__form'>
+			<form action='' onSubmit={addComment} id='comment__form' label='add comment'>
 				<textarea
 					type='text'
 					name='text'
 					id='text'
+					aria-label='Ecrivez votre commentaire'
 					onChange={(e) => setText(e.target.value)}
 					value={text}
 					placeholder='Ajouter un commentaire'
