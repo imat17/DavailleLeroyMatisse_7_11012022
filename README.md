@@ -26,9 +26,11 @@ Votre navigateur devrait s'ouvrir, sinon rendez-vous sur ce lien:
 
 ## Base de données
 
+Documentation API : https://documenter.getpostman.com/view/17311089/UVkqsaFy
+
 Deux fichiers .env sont nécessaires:
 
--A la racine du dossier "back",  veuillez respecter le nom des variables et remplir les valeurs en suivant l'exemple pour vous connecter à la base de données.
+-Dans le dossier "back",  veuillez respecter le nom des variables et remplir les valeurs en suivant l'exemple pour vous connecter à la base de données.
 Exemple : 
 * DATABASE='groupomania'
 * USER='root'
@@ -38,7 +40,7 @@ Exemple :
 * HOST='localhost'
 * TOKEN_SECRET='chainedecaractèresrandom'
 
--A la racine du dossier "groupomania"  (front/groupomania), veuillez respecter le nom de la variable et remplir la valeur en suivant l'exemple pour vous connecter à la base de données.
+-Dans le dossier "groupomania"  (front/groupomania), veuillez respecter le nom de la variable et remplir la valeur en suivant l'exemple pour vous connecter à la base de données.
 Donnez lui comme valeur le port sur lequel tourne le serveur Express. 
 Exemple : 
 * REACT_APP_API_URL: http://localhost:8000/
