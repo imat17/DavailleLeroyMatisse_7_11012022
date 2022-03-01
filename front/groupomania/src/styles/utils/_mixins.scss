@@ -14,6 +14,12 @@
 	}
 }
 
+@mixin wrap-form {
+	@media screen and (max-width: 460px) {
+		margin-top: 10px;
+	}
+}
+
 @mixin flex-center {
 	display: flex;
 	justify-content: center;
@@ -35,7 +41,7 @@
 
 @mixin header-visible {
 	@media screen and (max-width: 750px) {
-		display: visible;
+		display: block;
 	}
 	@media screen and (min-width: 750px) {
 		display: none;

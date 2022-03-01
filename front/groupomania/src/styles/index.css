@@ -47,7 +47,7 @@ header .container__img img:nth-child(2) {
 }
 @media screen and (max-width: 750px) {
   header .container__img img:nth-child(2) {
-    display: visible;
+    display: block;
   }
 }
 @media screen and (min-width: 750px) {
@@ -107,6 +107,7 @@ header .profile__preview img {
   display: flex;
   align-items: center;
   justify-content: space-around;
+  flex-wrap: wrap;
   padding: 2rem;
 }
 .auth__form ul li {
@@ -126,6 +127,11 @@ header .profile__preview img {
 }
 .auth__form ul li:hover {
   opacity: 0.8;
+}
+@media screen and (max-width: 460px) {
+  .auth__form ul li:nth-child(2) {
+    margin-top: 10px;
+  }
 }
 
 form {

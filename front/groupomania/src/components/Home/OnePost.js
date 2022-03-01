@@ -37,7 +37,7 @@ const OnePost = (props) => {
 	};
 
 	const iconsDisplay = () => {
-		if (uid === post.User.id || admin === true) {
+		if (uid === post.User.id) {
 			return (
 				<div className='trash__container'>
 					<img
@@ -53,6 +53,18 @@ const OnePost = (props) => {
 						alt='edit'
 						title='Editer le post'
 						onClick={() => setToggle(!toggle)}
+					/>
+				</div>
+			);
+		} else if (uid === post.User.id || admin === true) {
+			return (
+				<div className='trash__container'>
+					<img
+						src={Trash}
+						className='trash'
+						alt='trash'
+						title='Supprimer le post'
+						onClick={deletePost}
 					/>
 				</div>
 			);
